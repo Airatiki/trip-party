@@ -64,7 +64,6 @@ class CreateTravel extends Component<IProps, IState> {
                         }
                     />
                 </FormLayoutGroup>
-
                 <FormLayoutGroup top='Дата начала'>
                     <Input
                         type='date'
