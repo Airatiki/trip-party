@@ -139,6 +139,7 @@ class Create extends Component<IProps, IState> {
                     />
                 </FormLayoutGroup>
                 <Checkbox
+                    className='d-none'
                     defaultChecked={this.state.showTicketCost}
                     onChange={
                         () =>

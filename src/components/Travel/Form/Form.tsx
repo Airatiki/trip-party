@@ -162,6 +162,7 @@ class Form extends Component<IProps, IState> {
                         </div>
                     </Div>
                     <Checkbox
+                        className='d-none'
                         defaultChecked={this.state.showTicketCost}
                         onChange={
                             () =>
