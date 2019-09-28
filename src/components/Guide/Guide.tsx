@@ -32,7 +32,7 @@ class Guide extends Component<IProps> {
     };
 
     public onDonate = () => {
-
+        window.open(`https://vk.me/moneysend/${this.props.profile.VkId}`);
     };
 
     public onAddLike = () => {

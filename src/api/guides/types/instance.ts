@@ -18,7 +18,6 @@ export interface IGuide {
     likes: number;
     hasBeenLiked: boolean;
     budget: string;
-    donateLink: string;
     places: IPlace[];
     tags: TAGS[];
 }
@@ -30,7 +29,6 @@ export interface IToPost {
     authorId: string;
     likes: number;
     budget: string;
-    donateLink: string;
     places: IPlace[];
     tags: TAGS[];
 }

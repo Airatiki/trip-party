@@ -20,7 +20,6 @@ export interface IState {
     authorId: string;
     likes: number;
     budget: string;
-    donateLink: string;
     places: IPlace[];
     tags: TAGS[];
 }

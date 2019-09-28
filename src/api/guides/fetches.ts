@@ -16,7 +16,6 @@ export default {
                     authorId: '',
                     likes: 123,
                     budget: '100k',
-                    donateLink: 'https://google.com',
                     hasBeenLiked: false,
                     places: [
                         {

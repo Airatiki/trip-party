@@ -22,7 +22,6 @@ class CreateGuide extends Component<IProps, IState> {
             authorId: this.props.profile.VkId,
             likes: 0,
             budget: '',
-            donateLink: '',
             places: [],
             tags: [],
         };
@@ -61,15 +60,6 @@ class CreateGuide extends Component<IProps, IState> {
                         onChange={
                             (event: FormEvent<HTMLInputElement>) =>
                                 this.setState({budget: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Ссылка на донат'>
-                    <Input
-                        defaultValue={this.state.donateLink}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({donateLink: event.currentTarget.value})
                         }
                     />
                 </FormLayoutGroup>
