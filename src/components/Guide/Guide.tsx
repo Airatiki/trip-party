@@ -1,11 +1,11 @@
 import { IReduxState } from 'api/types';
 import { IProps, IReduxInjectedState, IReduxInjectedDispatch, IOwnProps } from './types';
 
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose, Dispatch } from 'redux';
-import { Button, Div, ScreenSpinner } from "@vkontakte/vkui";
+import { Button, Div, ScreenSpinner, Group, List, Cell } from "@vkontakte/vkui";
 import Icon36LikeOutline from '@vkontakte/icons/dist/36/like_outline';
 import Icon36Like from '@vkontakte/icons/dist/36/like';
 
@@ -59,86 +59,114 @@ class Guide extends Component<IProps> {
         const {guide} = this.props;
 
         return(
-            <Div>
-                <div className='d-flex flex-row justify-content-between'>
-                    <label style={{marginTop: '5px', fontSize: '20px'}}>
-                        {guide.name}
-                    </label>
-                    <Button
-                        onClick={this.goToTravel}
-                    >
-                        Создать
-                    </Button>
-                </div>
-                <div>
-                    {guide.description}
-                </div>
-                <Div>
-                    <div className='row'>
-                        <div className='col col-4'>
-                            <label className='col-form-label'>
-                                Город:
-                            </label>
-                        </div>
-                        <div className='col col-8'>
-                            <Button className='w-100'>
-                                {guide.city}
-                            </Button>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col col-4'>
-                            <label className='col-form-label'>
-                                Бюджет:
-                            </label>
-                        </div>
-                        <div className='col col-8'>
-                            <Button className='w-100'>
-                                {guide.budget}
-                            </Button>
-                        </div>
-                    </div>
-                </Div>
-                <Div className='row'>
-                    <Button
-                        className='col col-6'
-                        size='xl'
-                        onClick={this.onDonate}
-                    >
-                        Донат
-                    </Button>
-                    <div className='col col-4'/>
-                    <div className='col col-2 d-flex flex-row justify-content-end align-items-center'>
-                        {
-                            this.props.guide.hasBeenLiked ?
-                                <Icon36Like onClick={this.onRemoveLike}/>
-                                :
-                                <Icon36LikeOutline onClick={this.onAddLike}/>
-                        }
-                        <div className='ml-1'>
-                            {this.props.guide.likes}
-                        </div>
-                    </div>
-                </Div>
-                <Div className='d-flex flex-wrap'>
-                    {
-                        this.props.guide.tags.map(
-                            (tag, i) =>
-                                <Button key={i}>
-                                    {tag}
+            <Fragment>
+                <Group>
+                    <List>
+                        <Cell>
+                            <div className='d-flex flex-row justify-content-between'>
+                                <label className='col-form-label' style={{fontSize: '20px'}}>
+                                    {guide.name}
+                                </label>
+                                <Button
+                                    size='l'
+                                    onClick={this.goToTravel}
+                                >
+                                    Создать
                                 </Button>
-                        )
-                    }
-                </Div>
-                <div>
-                    {
-                        this.props.guide.places.map(
-                            (place) =>
-                                <Place key={place.name} {...place}/>
-                        )
-                    }
-                </div>
-            </Div>
+                            </div>
+                        </Cell>
+                    </List>
+                </Group>
+                <Group>
+                    <List>
+                        <Cell multiline={true}>
+                            {guide.description}
+                        </Cell>
+                    </List>
+                </Group>
+                <Group>
+                    <List>
+                        <Cell>
+                            <div className='row'>
+                                <div className='col col-4'>
+                                    <label className='col-form-label'>
+                                        Город:
+                                    </label>
+                                </div>
+                                <div className='col col-8'>
+                                    <Button className='w-100'>
+                                        {guide.city}
+                                    </Button>
+                                </div>
+                            </div>
+                        </Cell>
+                        <Cell>
+                            <div className='row'>
+                                <div className='col col-4'>
+                                    <label className='col-form-label'>
+                                        Бюджет:
+                                    </label>
+                                </div>
+                                <div className='col col-8'>
+                                    <Button className='w-100'>
+                                        {guide.budget}
+                                    </Button>
+                                </div>
+                            </div>
+                        </Cell>
+                    </List>
+                </Group>
+                <Group>
+                    <List>
+                        <Div className='d-flex flex-row justify-content-between'>
+                            <div className='col col-8' style={{marginLeft: '-15px'}}>
+                                <Button
+                                    className='w-100'
+                                    size='xl'
+                                    onClick={this.onDonate}
+                                >
+                                    Донат
+                                </Button>
+                            </div>
+                            <div className='d-flex flex-row justify-content-end align-items-center'>
+                                {
+                                    this.props.guide.hasBeenLiked ?
+                                        <Icon36Like onClick={this.onRemoveLike}/>
+                                        :
+                                        <Icon36LikeOutline onClick={this.onAddLike}/>
+                                }
+                                <div className='ml-1'>
+                                    {this.props.guide.likes}
+                                </div>
+                            </div>
+                        </Div>
+                    </List>
+                </Group>
+                <Group>
+                    <List className='d-flex flex-wrap'>
+                        <Div>
+                            {
+                                this.props.guide.tags.map(
+                                    (tag, i) =>
+                                        <Button key={i}>
+                                            {tag}
+                                        </Button>
+                                )
+                            }
+                        </Div>
+                    </List>
+                </Group>
+                <Group title='Места'>
+                    <List>
+                        {
+                            this.props.guide.places.map(
+                                (place) =>
+                                    <Place key={place.name} {...place}/>
+                            )
+                        }
+                    </List>
+                </Group>
+            </Fragment>
         );
     }
 }

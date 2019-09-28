@@ -1,6 +1,7 @@
 import { IProps, IState } from "./types";
 
 import React, { Component } from 'react';
+import { Cell } from "@vkontakte/vkui";
 
 
 class Place extends Component<IProps, IState> {
@@ -13,9 +14,9 @@ class Place extends Component<IProps, IState> {
 
     public render() {
         return(
-            <div>
+            <Cell>
                 {this.props.name}
-            </div>
+            </Cell>
         );
     }
 }
