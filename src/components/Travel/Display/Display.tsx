@@ -88,19 +88,22 @@ class Display extends Component<IProps> {
                                 </Button>
                             </div>
                         </div>
-                        <div className='row'>
-                            <label className='col-form-label col col-4'>
-                                Чат:
-                            </label>
-                            <div className='col col-8'>
-                                <Button
-                                    className='w-100'
-                                    onClick={() => window.open(travel.chatLink, '_blank')}
-                                >
-                                    Открыть чат
-                                </Button>
+                        {
+                            travel.chatLink &&
+                            <div className='row'>
+                                <label className='col-form-label col col-4'>
+                                    Чат:
+                                </label>
+                                <div className='col col-8'>
+                                    <Button
+                                        className='w-100'
+                                        onClick={() => window.open(travel.chatLink, '_blank')}
+                                    >
+                                        Открыть чат
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </Div>
                 </div>
                 <div>
