@@ -10,9 +10,6 @@ export interface IParticipant {
 export interface IToPostNew {
     VkId: string;
     occasionId: string;
-    image: string;
-    firstName: string;
-    lastName: string;
 }
 
 export interface IToPost {

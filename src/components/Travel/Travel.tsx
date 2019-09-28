@@ -8,7 +8,6 @@ import { compose, Dispatch } from 'redux';
 import { withRouter } from 'react-router';
 
 import * as actions from 'api/travels/actions';
-import * as profileActions from 'api/profile/actions';
 
 import Display from './Display';
 import Form from './Form';
@@ -38,8 +37,6 @@ class Travel extends Component<IProps, IState> {
             return null;
         }
 
-        const isAdmin = this.props.travel.authorId === this.props.profile.VkId;
-
         return(
             <Div>
                 {
@@ -53,7 +50,6 @@ class Travel extends Component<IProps, IState> {
                         :
                         (
                             <Display
-                                isAdmin={isAdmin}
                                 travel={this.props.travel!}
                                 onEdit={() => this.setState({isForm: true})}
                             />
@@ -68,7 +64,6 @@ export default compose(
     connect<IReduxInjectedState, IReduxInjectedDispatch>(
         (state: IReduxState, props: IOwnProps) => ({
             travel: actions.getState(state).find((travel) => travel.id === props.match.params.id),
-            profile: profileActions.getState(state),
         }),
         (dispatch: Dispatch) => ({
             get: actions.get(dispatch),

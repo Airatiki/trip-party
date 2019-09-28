@@ -16,7 +16,6 @@ export default function(state: IState = initState, action: IReduxAction) {
     switch (action.type) {
         case ACTIONS_TYPES.GET_TRAVELS_SUCCEED: {
             const {travels, error} = <IGetSucceedAction>action;
-
             return error ?
                 {
                     ...state,

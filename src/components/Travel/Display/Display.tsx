@@ -1,8 +1,14 @@
-import { IProps } from './types';
+import { IProps, IReduxInjectedState, IReduxInjectedDispatch } from './types';
+import { IReduxState } from 'api/types';
 
 import React, { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
+import { compose, Dispatch } from 'redux';
 import { Button, Div } from '@vkontakte/vkui';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
+
+import * as profileActions from 'api/profile/actions';
+import * as participantsActions from 'api/participants/actions';
 
 import { formatDate } from 'helpers';
 
@@ -11,8 +17,18 @@ import NewParticipant from 'components/Helpers/NewParticipant';
 
 
 class Display extends Component<IProps> {
+    public onRequest = () => {
+        this.props.postNew({
+            VkId: this.props.profile.VkId,
+            occasionId: this.props.travel.id,
+        });
+    };
+
     public render() {
-        const {isAdmin, travel, onEdit} = this.props;
+        const {profile, travel, onEdit} = this.props;
+        const isAdmin = travel.authorId === profile.VkId;
+        const requestHasBeenSent = travel
+            .newParticipants.find((participant) => participant.VkId === profile.VkId);
 
         return(
             <Fragment>
@@ -22,7 +38,27 @@ class Display extends Component<IProps> {
                             <label style={{marginTop: '5px', fontSize: '20px'}}>
                                 {travel.name}
                             </label>
-                            <Icon24Write onClick={onEdit}/>
+                            {
+                                isAdmin &&
+                                <Icon24Write onClick={onEdit}/>
+                            }
+                            {
+                                !isAdmin &&
+                                <div>
+                                    {
+                                        requestHasBeenSent &&
+                                        <Button level='secondary'>
+                                            Заявка отправлена
+                                        </Button>
+                                    }
+                                    {
+                                        !requestHasBeenSent && !travel.noNewPeople &&
+                                        <Button onClick={this.onRequest}>
+                                            Подать заявку
+                                        </Button>
+                                    }
+                                </div>
+                            }
                         </div>
                     </div>
                     <div>
@@ -79,7 +115,10 @@ class Display extends Component<IProps> {
                                 Чат:
                             </label>
                             <div className='col col-8'>
-                                <Button className='w-100'>
+                                <Button
+                                    className='w-100'
+                                    onClick={() => window.open(travel.chatLink, '_blank')}
+                                >
                                     Открыть чат
                                 </Button>
                             </div>
@@ -132,4 +171,13 @@ class Display extends Component<IProps> {
     }
 }
 
-export default Display;
+export default compose(
+    connect<IReduxInjectedState, IReduxInjectedDispatch>(
+        (state: IReduxState) => ({
+            profile: profileActions.getState(state),
+        }),
+        (dispatch: Dispatch) => ({
+            postNew: participantsActions.postNew(dispatch),
+        })
+    )
+)(Display);

@@ -17,4 +17,5 @@ export interface IState {
     visibility: VISIBILITY;
     budget: string;
     showTicketCost: boolean;
+    chatLink: string;
 }

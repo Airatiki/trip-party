@@ -1,11 +1,9 @@
 import { IToPut, ITravel } from 'api/travels/types/instance';
-import { IProfile } from 'api/profile/types/instance';
 import * as NSRedux from "../../api/travels/types/redux";
 
 
 export interface IReduxInjectedState {
     travel?: ITravel;
-    profile: IProfile;
 }
 
 export interface IReduxInjectedDispatch {

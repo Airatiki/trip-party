@@ -7,7 +7,6 @@ import { compose, Dispatch } from 'redux';
 
 import * as actions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
-import './Travels.css';
 import {platform, ScreenSpinner, Tabs, TabsItem} from "@vkontakte/vkui";
 import {OS} from "@vkontakte/vkui/dist/lib/platform";
 import TravelDemo from "./TravelDemo";

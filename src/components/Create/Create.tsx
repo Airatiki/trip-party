@@ -22,6 +22,7 @@ class Create extends Component<IProps, IState> {
             visibility: VISIBILITY.FRIENDS,
             budget: '',
             showTicketCost: true,
+            chatLink: '',
         };
     }
 
@@ -89,6 +90,16 @@ class Create extends Component<IProps, IState> {
                         onChange={
                             (event: FormEvent<HTMLTextAreaElement>) =>
                                 this.setState({description: event.currentTarget.value})
+                        }
+                    />
+                </FormLayoutGroup>
+                <FormLayoutGroup top='Ссылка на чат'>
+                    <Input
+                        className='w-100'
+                        defaultValue={this.state.chatLink}
+                        onChange={
+                            (event: FormEvent<HTMLInputElement>) =>
+                                this.setState({chatLink: event.currentTarget.value})
                         }
                     />
                 </FormLayoutGroup>

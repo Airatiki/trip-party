@@ -17,4 +17,6 @@ export interface IState {
     startDate: Date;
     endDate: Date;
     showTicketCost: boolean;
+    noNewPeople: boolean;
+    chatLink: string;
 }

@@ -1,7 +1,18 @@
 import { IProps, IState } from './types';
 
 import React, { Component, FormEvent, Fragment } from 'react';
-import { Button, Checkbox, Div, FormLayout, FormLayoutGroup, Input, Radio, Textarea } from '@vkontakte/vkui';
+import {
+    Button,
+    Cell,
+    Checkbox,
+    Div,
+    FormLayout,
+    FormLayoutGroup,
+    Input,
+    Radio,
+    Switch,
+    Textarea
+} from '@vkontakte/vkui';
 
 import { VISIBILITY } from 'api/travels/constants';
 
@@ -23,6 +34,8 @@ class Form extends Component<IProps, IState> {
             startDate: travel.startDate,
             endDate: travel.endDate,
             showTicketCost: travel.showTicketCost,
+            noNewPeople: travel.noNewPeople,
+            chatLink: travel.chatLink,
         };
     }
 
@@ -130,7 +143,21 @@ class Form extends Component<IProps, IState> {
                                             this.setState({endDate: new Date(event.currentTarget.value)})
                                     }
                                 />
-
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <label className='col-form-label col col-4'>
+                                Ссылка на чат
+                            </label>
+                            <div className='col col-8'>
+                                <Input
+                                    className='w-100'
+                                    defaultValue={this.state.chatLink}
+                                    onChange={
+                                        (event: FormEvent<HTMLInputElement>) =>
+                                            this.setState({chatLink: event.currentTarget.value})
+                                    }
+                                />
                             </div>
                         </div>
                     </Div>
@@ -169,6 +196,21 @@ class Form extends Component<IProps, IState> {
                             >
                                 Всем
                             </Radio>
+                        </FormLayoutGroup>
+                        <FormLayoutGroup>
+                            <Cell
+                                asideContent={
+                                    <Switch
+                                        defaultChecked={this.state.noNewPeople}
+                                        onChange={
+                                            () =>
+                                                this.setState({noNewPeople: !this.state.noNewPeople})
+                                        }
+                                    />
+                                }
+                            >
+                                Закрыть приём новых участников
+                            </Cell>
                         </FormLayoutGroup>
                     </FormLayout>
                 </div>

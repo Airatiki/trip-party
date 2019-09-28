@@ -17,6 +17,8 @@ export interface ITravel {
     showTicketCost: boolean;
     participants: IParticipant[];
     newParticipants: IParticipant[];
+    noNewPeople: boolean;
+    chatLink: string;
 }
 
 export interface IToPost {
@@ -28,6 +30,7 @@ export interface IToPost {
     endDate: Date;
     budget: string;
     showTicketCost: boolean;
+    chatLink: string;
 }
 
 export interface IToPut {
@@ -40,4 +43,6 @@ export interface IToPut {
     endDate: Date;
     budget: string;
     showTicketCost: boolean;
+    noNewPeople: boolean;
+    chatLink: string;
 }

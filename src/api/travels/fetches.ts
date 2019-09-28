@@ -19,6 +19,8 @@ export default {
                     place: 'Moya djopa',
                     budget: '11111',
                     showTicketCost: true,
+                    noNewPeople: false,
+                    chatLink: 'https://vk.me/join/AJQ1d/4s3RQ7bSdaUG7paZuD',
                     newParticipants: [
                         {
                             id: 'kekIdqqqqqqqq',
@@ -72,6 +74,7 @@ export default {
                 budget: '11111',
                 showTicketCost: true,
                 newParticipants: [],
+                noNewPeople: false,
             }
         };
     },

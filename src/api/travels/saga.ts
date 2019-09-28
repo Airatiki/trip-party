@@ -12,7 +12,6 @@ export default {
     get(): IGet {
         function* caller(action: NSRedux.IGetAction) {
             const {travels, error}: NSFetch.IGet = yield call(fetches.get, action.filters);
-
             const newTravels = [];
 
             if (!!travels) {
