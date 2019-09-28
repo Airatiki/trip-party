@@ -21,9 +21,7 @@ class Travels extends Component<IProps> {
     }
 
     public componentDidMount(): void {
-        this.props.get({
-            city: '',
-        }, this.props.profile.friends, this.props.profile.VkId);
+        this.props.get({}, this.props.profile.friends, this.props.profile.VkId);
     }
 
     public componentDidUpdate(): void {

@@ -11,7 +11,7 @@ import * as actions from 'api/travels/actions';
 
 import Display from './Display';
 import Form from './Form';
-import { Div } from '@vkontakte/vkui';
+import { Div, ScreenSpinner } from '@vkontakte/vkui';
 
 
 class Travel extends Component<IProps, IState> {
@@ -20,11 +20,10 @@ class Travel extends Component<IProps, IState> {
         this.state = {
             isForm: false,
         };
-        // !this.props.travel && this.props.history.push('/404');
     }
 
     public componentDidMount(): void {
-        this.props.get({city: ''}, [''], '');
+        this.props.get({id: this.props.match.params.id}, [''], '');
     }
 
     public onSave = (travel: IToPut) => {
@@ -34,7 +33,7 @@ class Travel extends Component<IProps, IState> {
 
     public render() {
         if (!this.props.travel) {
-            return null;
+            return <ScreenSpinner size='large'/>;
         }
 
         return(

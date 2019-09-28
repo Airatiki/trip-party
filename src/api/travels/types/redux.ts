@@ -11,8 +11,7 @@ export interface IState {
 export interface IGetAction {
     type: ACTIONS_TYPES.GET_TRAVELS,
     filters: {
-        city?: string,
-        date?: Date,
+        id?: string;
     },
     friends: string[],
     ownerId: string
