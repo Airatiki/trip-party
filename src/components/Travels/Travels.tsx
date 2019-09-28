@@ -1,24 +1,111 @@
 import { IProps } from './types';
 import { IReduxState } from 'api/types';
 
-import React, { Component } from 'react';
+import React, {Component, FormEvent} from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 
 import * as actions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
 import './Travels.css';
-import {platform, ScreenSpinner, Tabs, TabsItem} from "@vkontakte/vkui";
+import {
+    Cell, Checkbox,
+    FormLayout, FormLayoutGroup, Group,
+    HeaderButton, Input,
+    IS_PLATFORM_ANDROID, IS_PLATFORM_IOS, List,
+    ModalPage,
+    ModalPageHeader,
+    ModalRoot, Panel, PanelHeader,
+    platform, Radio,
+    ScreenSpinner, Search, Slider,
+    Tabs,
+    TabsItem,
+    View
+} from "@vkontakte/vkui";
 import {OS} from "@vkontakte/vkui/dist/lib/platform";
 import TravelDemo from "./TravelDemo";
 
-class Travels extends Component<IProps> {
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import Icon24Done from '@vkontakte/icons/dist/24/done';
+import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
+import Icon24Sort from '@vkontakte/icons/dist/24/sort';
+
+import {dateToHtml} from "../../helpers";
+
+const MODAL_PAGE_FILTERS = 'filters';
+
+interface IFilterState {
+    activeModal: any,
+    modalHistory: any,
+    search: '',
+    searchList: [],
+    budget: number,
+    startDate: Date,
+    endDate: Date
+}
+
+class Travels extends Component<IProps, IFilterState> {
     public theme = 'light';
+    public users: any;
+    public modalBack: any;
 
     constructor(props: IProps) {
         super(props);
 
         this.theme = platform() === OS.IOS ? 'header' : 'light';
+
+        this.state = {
+            activeModal: null,
+            modalHistory: [],
+            budget: 1000,
+            search: '',
+            searchList: [],
+            startDate: new Date(),
+            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+        };
+
+        this.users = ['123', '123'];
+
+        this.modalBack = () => {
+            this.setActiveModal(this.state.modalHistory[this.state.modalHistory.length - 2]);
+        };
+    }
+
+    public setActiveModal(activeModal: any) {
+        activeModal = activeModal || null;
+        let modalHistory = this.state.modalHistory ? [...this.state.modalHistory] : [];
+
+        if (activeModal === null) {
+            modalHistory = [];
+        } else if (modalHistory.indexOf(activeModal) !== -1) {
+            modalHistory = modalHistory.splice(0, modalHistory.indexOf(activeModal) + 1);
+        } else {
+            modalHistory.push(activeModal);
+        }
+
+        this.setState({
+            activeModal,
+            modalHistory
+        });
+    };
+
+    public maps() {
+        if (!this.state.search) {
+            return;
+        }
+
+        const travelApi = `https://autocomplete.travelpayouts.com/places2?term=${this.state.search}&locale=ru`;
+
+        fetch(travelApi)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                this.setState({searchList: data})
+            })
+            .catch((e) => {
+                console.log(e);
+                this.setState({searchList: []})
+            })
     }
 
     public componentDidMount(): void {
@@ -33,32 +120,171 @@ class Travels extends Component<IProps> {
     }
 
     public render() {
+        const modal = (
+            <ModalRoot activeModal={this.state.activeModal}>
+                <ModalPage
+                    id={MODAL_PAGE_FILTERS}
+                    onClose={this.modalBack}
+                    header={
+                        <ModalPageHeader
+                            left={IS_PLATFORM_ANDROID
+                            && <HeaderButton onClick={this.modalBack}><Icon24Cancel/></HeaderButton>}
+                            right={<HeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS
+                                ? 'Готово' : <Icon24Done />}</HeaderButton>}
+                        >
+                            Фильтры
+                        </ModalPageHeader>
+                    }
+                >
+                    <FormLayout>
+
+                        <FormLayoutGroup top="Город">
+                            <Search
+                                value={this.state.search}
+                                onChange={(e: any) => {
+                                    this.setState({ search: e.replace(/\s+/g, ' ') });
+                                    this.maps();
+                                }}
+                            />
+                            {
+                                !!this.state.searchList.length &&
+                                <Group title={`Список мест по запросу "${this.state.search}"`}>
+                                    <List>
+                                        {
+                                            this.state.searchList.map((list: any, index) => {
+                                                    return (
+                                                        <Cell
+                                                            key={index}
+                                                            multiline={true}
+                                                            description={`${list.country_name}`}
+                                                            onClick={(value) => {
+                                                                console.log(value)
+                                                                this.setState({search: list.name, searchList: []})
+                                                            }}
+                                                        >
+                                                            {`${list.name}`}
+                                                        </Cell>
+                                                    );
+                                                }
+                                            )
+                                        }
+                                    </List>
+                                </Group>
+                            }
+                        </FormLayoutGroup>
+
+                        <FormLayoutGroup top="Хэштеги">
+                            <Checkbox
+                                onChange={(e) => {
+                                console.log(e.currentTarget.checked);
+                            }}
+                            >
+                                Спорт
+                            </Checkbox>
+                            <Checkbox>Бухло</Checkbox>
+                            <Checkbox>Рыбалка</Checkbox>
+                            <Checkbox>Сиськи</Checkbox>
+                        </FormLayoutGroup>
+
+                        <FormLayoutGroup top="Бюджет" bottom={`${Math.round(this.state.budget)}P`}>
+                            <Slider
+                                min={1}
+                                max={100000}
+                                value={Number(this.state.budget)}
+                                onChange={(value: any) => {
+                                    console.log(value);
+                                    this.setState({budget: value})
+                                }}
+                                defaultValue={this.state.budget}
+                                top="Бюджет"
+
+                            />
+                        </FormLayoutGroup>
+
+                        <FormLayoutGroup top="Дата начала">
+                                <Input
+                                    type='date'
+                                    className='w-100'
+                                    defaultValue={dateToHtml(this.state.startDate)}
+                                    onChange={
+                                        (event: FormEvent<HTMLInputElement>) =>
+                                            this.setState({startDate: new Date(event.currentTarget.value)})
+                                    }
+                                />
+                        </FormLayoutGroup>
+
+                        <FormLayoutGroup top="Дата конца">
+                                <Input
+                                    type='date'
+                                    className='w-100'
+                                    defaultValue={dateToHtml(this.state.endDate)}
+                                    onChange={
+                                        (event: FormEvent<HTMLInputElement>) =>
+                                            this.setState({endDate: new Date(event.currentTarget.value)})
+                                    }
+                                />
+                        </FormLayoutGroup>
+
+                        <FormLayoutGroup top="Отображать путешествия">
+                            <Radio name="sex" value={0} defaultChecked={true}>Всех пользователей</Radio>
+                            <Radio name="sex" value={1}>Только друзей</Radio>
+                        </FormLayoutGroup>
+
+                    </FormLayout>
+                </ModalPage>
+
+            </ModalRoot>
+        );
+
         if (!this.props.isLoaded) {
             return <ScreenSpinner size='large'/>
         }
 
         return(
             <div className='background-screen'>
-                {}
-                <Tabs theme={this.theme}>
-                    <TabsItem
-                        onClick={() => this.setState({ activeTab1: 'music' })}
-                        selected={true}
-                    >
-                        Путешествия
-                    </TabsItem>
-                    <TabsItem
-                        onClick={() => this.setState({ activeTab1: 'recomendations' })}
-                        selected={false}
-                    >
-                        События
-                    </TabsItem>
-                </Tabs>
-                {
-                    this.props.travels.map((travel) =>
-                        <TravelDemo key={travel.id} travel={travel}/>
-                    )
-                }
+                <View activePanel="modals" modal={modal}>
+                    <div>kek</div>
+
+                    <Panel id="modals">
+                        <PanelHeader
+                            left={<div>
+                                <HeaderButton
+                                    key="anonimus"
+                                    data-to="home"
+                                >
+                                    <Icon24BrowserBack/>
+                                </HeaderButton>
+                                <HeaderButton
+                                    key="filter"
+                                    data-to="home"
+                                    onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
+                                >
+                                    <Icon24Sort/>
+                                </HeaderButton></div>
+                            }
+                        />
+                        <Tabs theme={this.theme}>
+                            <TabsItem
+                                selected={true}
+                            >
+                                Путешествия
+                            </TabsItem>
+                            <TabsItem
+                                selected={false}
+                            >
+                                События
+                            </TabsItem>
+                        </Tabs>
+
+                        <div className='background-screen'>
+                            {
+                                this.props.travels.map((travel) =>
+                                    <TravelDemo key={travel.id} travel={travel}/>
+                                )
+                            }
+                        </div>
+                    </Panel>
+                </View>
             </div>
         );
     }
