@@ -8,16 +8,24 @@ export default {
     async get(): Promise<IGet> {
         try {
             const userData = await connect.sendPromise('VKWebAppGetUserInfo');
-            const users = await connect.sendPromise('VKWebAppGetFriends');
-
-
-            console.log(userData, users);
+            const data = await connect.sendPromise("VKWebAppGetAuthToken",
+                {app_id: 7150219, scope: "friends,status"});
+            const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
+                method: 'friends.get',
+                params: {
+                    count: 50,
+                    fields: 'city,domain,photo_100',
+                    order: 'random',
+                    v: '5.101',
+                    access_token: data.access_token
+                },
+            });
 
             return {
                 profile: {
                     id: 'id',
                     VkId: userData.id.toString(),
-                    friends: users.users.map((user: any) => user.id),
+                    friends: (items.response as any).items.map((user: any) => user.id),
                     travelsVisibility: VISIBILITY.FRIENDS,
                     travelsAnonymity: false,
                 },

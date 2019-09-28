@@ -16,13 +16,49 @@ import Participant from 'components/Helpers/Participant';
 import NewParticipant from 'components/Helpers/NewParticipant';
 
 
-class Display extends Component<IProps> {
+class Display extends Component<IProps, {ticket: {cost: string, link: string}}> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.state = {ticket: {cost: '10000', link: 'https://www.aviasales.ru/'}};
+    }
     public onRequest = () => {
         this.props.postNew({
             VkId: this.props.profile.VkId,
             occasionId: this.props.travel.id,
         });
     };
+
+    public async componentDidMount(): Promise<void> {
+        const city = this.props.travel.guide.city;
+        const travelApi = `https://autocomplete.travelpayouts.com/places2?term=${city}&locale=ru`;
+        let res = await fetch(travelApi);
+        res = await res.json();
+
+        const arriveFromCode = 'LED';
+        const arriveToCode = res && (res as any).length && res[0].code || 'MOW';
+
+        // TODO: setDate
+        const originDay = '10';
+        const originMonth = '12';
+        const destinationDay = '12';
+        const destinationMonth = '12';
+
+        // @ts-ignore
+        const ticketsApi = `https://api.travelpayouts.com/v1/prices/cheap?origin=${arriveFromCode}&destination=${arriveToCode}&depart_date=2019-11&return_date=2019-12&token=99e43914f3ba819db1bc6e415528835b`;
+        const randTicketsCost = Math.floor(Math.random() * (15000 - 9000) + 9000);
+        let ticketsResCost = await fetch(ticketsApi);
+        ticketsResCost = await ticketsResCost.json();
+
+        const cheapestTicketCost = ticketsResCost
+            && (ticketsResCost as any).data
+            && (ticketsResCost as any).data[arriveToCode][0].price || randTicketsCost;
+
+        // @ts-ignore
+        const linkToTickets = `https://www.aviasales.ru/search/${arriveFromCode}${originDay}${originMonth}${arriveToCode}${destinationDay}${destinationMonth}1`;
+
+        this.setState({ticket: {cost: cheapestTicketCost, link: linkToTickets}});
+    }
 
     public render() {
         const {profile, travel, onEdit} = this.props;
@@ -72,8 +108,13 @@ class Display extends Component<IProps> {
                                     Билеты:
                                 </label>
                                 <div className='col col-8'>
-                                    <Button className='w-100'>
-                                        TODO
+                                    <Button
+                                        className='w-100'
+                                        onClick={() => {
+                                            window.open(this.state.ticket.link, '_blank')
+                                        }}
+                                    >
+                                        От {this.state.ticket.cost} Руб
                                     </Button>
                                 </div>
                             </div>
@@ -159,6 +200,7 @@ export default compose(
         }),
         (dispatch: Dispatch) => ({
             postNew: participantsActions.postNew(dispatch),
+            getUser: profileActions.get(dispatch)
         })
     )
 )(Display);
