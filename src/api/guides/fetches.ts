@@ -18,7 +18,15 @@ export default {
                     budget: '100k',
                     donateLink: 'https://google.com',
                     hasBeenLiked: false,
-                    places: [],
+                    places: [
+                        {
+                            name: 'Place name',
+                            description: 'Some place description',
+                            photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgupYQu6kBNUOeH4vWIFBWm5p4z9yHmm9uc3ZipvHbW_aurOi5',
+                            lat: '11.0',
+                            lng: '11.0',
+                        }
+                    ],
                     tags: [
                         TAGS.GAAAAY,
                     ],
