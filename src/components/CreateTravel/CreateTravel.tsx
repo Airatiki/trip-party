@@ -10,7 +10,7 @@ import { Input, FormLayout, FormLayoutGroup, Radio, Textarea, Checkbox, Button }
 import * as travelsActions from 'api/travels/actions';
 
 
-class Create extends Component<IProps, IState> {
+class CreateTravel extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -163,4 +163,4 @@ export default compose(
             post: travelsActions.post(dispatch),
         })
     )
-)(Create);
+)(CreateTravel);

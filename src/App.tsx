@@ -17,10 +17,14 @@ import '@vkontakte/vkui/dist/vkui.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import Create from './components/Create';
+import CreateTravel from 'components/CreateTravel';
 import Travels from 'components/Travels';
 import Travel from 'components/Travel';
+import CreateGuide from 'components/CreateGuide';
+import Guides from 'components/Guides';
+import Guide from 'components/Guide';
 import Settings from 'components/Settings';
+
 import connect from '@vkontakte/vk-connect';
 // Sends event to client
 connect.send('VKWebAppInit');
@@ -58,11 +62,15 @@ class App extends Component {
                         <Provider store={store}>
                             <Router history={history}>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/create'/>
-                                    <Route exact={true} path='/create' component={Create}/>
+                                    <Redirect exact={true} from='/' to='/'/>
 
+                                    <Route exact={true} path='/create_trip' component={CreateTravel}/>
                                     <Route exact={true} path='/trips' component={Travels}/>
                                     <Route exact={true} path='/trips/:id' component={Travel}/>
+
+                                    <Route exact={true} path='/create_guide' component={CreateGuide}/>
+                                    <Route exact={true} path='/guides' component={Guides}/>
+                                    <Route exact={true} path='/guide/:id' component={Guide}/>
 
                                     <Route exact={true} path='/settings' component={Settings}/>
                                 </Switch>
