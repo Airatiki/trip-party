@@ -30,9 +30,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
     };
 
     public async componentDidMount(): Promise<void> {
-        // TODO: city
-        const city = 'Москва';
-
+        const city = this.props.travel.guide.city;
         const travelApi = `https://autocomplete.travelpayouts.com/places2?term=${city}&locale=ru`;
         let res = await fetch(travelApi);
         res = await res.json();
