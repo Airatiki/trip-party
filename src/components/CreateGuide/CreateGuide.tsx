@@ -82,6 +82,9 @@ class CreateGuide extends Component<IProps, IState> {
                         }
                     />
                 </FormLayoutGroup>
+                <FormLayoutGroup top='Места'>
+                    <div/>
+                </FormLayoutGroup>
                 <Button size='xl' onClick={this.onSave}>
                     Сохранить
                 </Button>

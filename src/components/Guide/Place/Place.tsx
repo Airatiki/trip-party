@@ -1,7 +1,8 @@
 import { IProps, IState } from "./types";
 
-import React, { Component } from 'react';
-import { Cell } from "@vkontakte/vkui";
+import React, { Component, Fragment } from 'react';
+import { Cell, List, Separator } from "@vkontakte/vkui";
+import LeafletMap from "../../Helpers/LeafletMap";
 
 
 class Place extends Component<IProps, IState> {
@@ -14,9 +15,28 @@ class Place extends Component<IProps, IState> {
 
     public render() {
         return(
-            <Cell>
-                {this.props.name}
-            </Cell>
+            <List>
+                <Cell
+                    onClick={
+                        () =>
+                            this.setState({isOpen: !this.state.isOpen})
+                    }
+                >
+                    {this.props.name}
+                </Cell>
+                {
+                    this.state.isOpen &&
+                    <Fragment>
+                        <Separator/>
+                        <Cell multiline={true}>
+                            {this.props.description}
+                        </Cell>
+                        <Cell>
+                            <LeafletMap lat={'10'} lng={'10'}/>
+                        </Cell>
+                    </Fragment>
+                }
+            </List>
         );
     }
 }

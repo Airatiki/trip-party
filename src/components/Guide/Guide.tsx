@@ -157,14 +157,12 @@ class Guide extends Component<IProps> {
                     </List>
                 </Group>
                 <Group title='Места'>
-                    <List>
-                        {
-                            this.props.guide.places.map(
-                                (place) =>
-                                    <Place key={place.name} {...place}/>
-                            )
-                        }
-                    </List>
+                    {
+                        this.props.guide.places.map(
+                            (place) =>
+                                <Place key={place.name} {...place}/>
+                        )
+                    }
                 </Group>
             </Fragment>
         );
