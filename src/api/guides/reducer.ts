@@ -1,6 +1,7 @@
 import { IReduxAction } from '../types';
 import { ACTIONS_TYPES } from './constants';
-import { IState, IGetSucceedAction, IPostSucceedAction } from './types/redux';
+import { IGetSucceedAction, IPostLikeSucceedAction, IPostSucceedAction, IState } from './types/redux';
+import { setLike } from "./functions";
 
 
 const initState: IState = {
@@ -37,6 +38,21 @@ export default function(state: IState = initState, action: IReduxAction) {
                 {
                     ...state,
                     data: [guide, ...state.data],
+                    error: null,
+                    isLoaded: true,
+                }
+        }
+        case ACTIONS_TYPES.POST_GUIDE_LIKE_SUCCEED: {
+            const {data, error} = <IPostLikeSucceedAction>action;
+            return error ?
+                {
+                    ...state,
+                    error,
+                    isLoaded: true,
+                } :
+                {
+                    ...state,
+                    data: setLike(state.data, data!),
                     error: null,
                     isLoaded: true,
                 }

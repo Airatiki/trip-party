@@ -10,6 +10,7 @@ export default {
             travels: [
                 {
                     id: 'id',
+                    guideId: 'kekGuideId',
                     authorId: '',
                     name: 'Name',
                     description: 'Description Description Description Description Description Description Description ',
@@ -84,6 +85,7 @@ export default {
             travel: {
                 ...travel,
                 authorId: 'id',
+                guideId: 'kekGuideId',
                 newParticipants: [],
                 participants: [],
             }

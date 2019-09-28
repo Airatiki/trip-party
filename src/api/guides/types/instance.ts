@@ -11,11 +11,12 @@ export interface IPlace {
 
 export interface IGuide {
     id: string;
+    authorId: string;
     name: string;
     description: string;
     city: string;
-    authorId: string;
     likes: number;
+    hasBeenLiked: boolean;
     budget: string;
     donateLink: string;
     places: IPlace[];
@@ -32,4 +33,10 @@ export interface IToPost {
     donateLink: string;
     places: IPlace[];
     tags: TAGS[];
+}
+
+export interface IToPostLike {
+    id: string;
+    userId: string;
+    isLiked: boolean;
 }

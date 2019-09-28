@@ -4,7 +4,7 @@ import { ACTIONS_TYPES } from './constants';
 import fetches from './fetches';
 import * as NSFetch from './types/fetchResult';
 import * as NSRedux from './types/redux';
-import { IGet, IPost } from './types/saga';
+import { IGet, IPost, IPostLike } from './types/saga';
 
 
 export default {
@@ -42,6 +42,26 @@ export default {
 
         function* taker() {
             yield takeLatest(ACTIONS_TYPES.POST_GUIDE, caller);
+        }
+
+        // @ts-ignore
+        return {caller, taker};
+    },
+
+    postLike(): IPostLike {
+        function* caller(action: NSRedux.IPostLikeAction) {
+            const {data, error}: NSFetch.IPostLike = yield call(fetches.postLike, action.data);
+            const success: NSRedux.IPostLikeSucceedAction = {
+                type: ACTIONS_TYPES.POST_GUIDE_LIKE_SUCCEED,
+                error,
+                data,
+            };
+
+            yield put(success);
+        }
+
+        function* taker() {
+            yield takeLatest(ACTIONS_TYPES.POST_GUIDE_LIKE, caller);
         }
 
         // @ts-ignore

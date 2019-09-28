@@ -1,13 +1,16 @@
 import { VISIBILITY } from '../../api/travels/constants';
 import { dateToHtml } from '../../helpers';
-import { IProps, IReduxInjectedDispatch, IState } from './types';
+import { IProps, IReduxInjectedDispatch, IReduxInjectedState, IState } from './types';
 
 import React, { Component, FormEvent } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { compose, Dispatch } from 'redux';
 import { Input, FormLayout, FormLayoutGroup, Radio, Textarea, Checkbox, Button } from '@vkontakte/vkui';
 
 import * as travelsActions from 'api/travels/actions';
+import * as profileActions from 'api/profile/actions';
+import { IReduxState } from "../../api/types";
 
 
 class CreateTravel extends Component<IProps, IState> {
@@ -24,6 +27,13 @@ class CreateTravel extends Component<IProps, IState> {
             showTicketCost: true,
             chatLink: '',
         };
+        if (!this.props.location.state) {
+            this.props.history.push('/404');
+            return;
+        }
+        if (!this.props.location.state.guideId) {
+            this.props.history.push('/404')
+        }
     }
 
     public onChangeType = (event: FormEvent<HTMLInputElement>) => {
@@ -39,6 +49,8 @@ class CreateTravel extends Component<IProps, IState> {
     public onSave = () => {
         this.props.post({
             ...this.state,
+            guideId: this.props.location.state!.guideId!,
+            authorId: this.props.profile.VkId,
         });
     };
 
@@ -157,10 +169,12 @@ class CreateTravel extends Component<IProps, IState> {
 }
 
 export default compose(
-    connect<null, IReduxInjectedDispatch>(
-        null,
+    connect<IReduxInjectedState, IReduxInjectedDispatch>(
+        (state: IReduxState) => ({
+            profile: profileActions.getState(state),
+        }),
         (dispatch: Dispatch) => ({
             post: travelsActions.post(dispatch),
         })
     )
-)(CreateTravel);
+)(withRouter(CreateTravel));

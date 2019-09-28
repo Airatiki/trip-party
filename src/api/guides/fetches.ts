@@ -1,5 +1,5 @@
-import { IGet, IPost } from './types/fetchResult';
-import { IToPost } from './types/instance';
+import { IGet, IPost, IPostLike } from './types/fetchResult';
+import { IToPost, IToPostLike } from './types/instance';
 import * as NSRedux from './types/redux';
 import { TAGS } from "./constants";
 
@@ -17,6 +17,7 @@ export default {
                     likes: 123,
                     budget: '100k',
                     donateLink: 'https://google.com',
+                    hasBeenLiked: false,
                     places: [],
                     tags: [
                         TAGS.GAAAAY,
@@ -30,8 +31,15 @@ export default {
         return {
             guide: {
                 id: 'guideId',
+                hasBeenLiked: false,
                 ...guide,
             }
+        }
+    },
+
+    async postLike(data: IToPostLike): Promise<IPostLike> {
+        return {
+            data,
         }
     },
 }

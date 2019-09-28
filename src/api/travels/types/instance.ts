@@ -5,6 +5,7 @@ import { VISIBILITY } from '../constants';
 
 export interface ITravel {
     id: string;
+    guideId: string;
     authorId: string;
     name: string;
     description: string;
@@ -22,6 +23,8 @@ export interface ITravel {
 }
 
 export interface IToPost {
+    guideId: string;
+    authorId: string;
     name: string;
     description: string;
     place: string;

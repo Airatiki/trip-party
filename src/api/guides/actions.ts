@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { IReduxState } from '../types';
 import { ACTIONS_TYPES } from './constants';
-import { IToPost } from './types/instance';
+import { IToPost, IToPostLike } from './types/instance';
 import * as NSRedux from './types/redux';
 
 
@@ -32,6 +32,16 @@ export function post(dispatch: Dispatch) {
         const action: NSRedux.IPostAction = {
             type: ACTIONS_TYPES.POST_GUIDE,
             guide,
+        };
+        dispatch(action);
+    };
+}
+
+export function postLike(dispatch: Dispatch) {
+    return function(data: IToPostLike): void {
+        const action: NSRedux.IPostLikeAction = {
+            type: ACTIONS_TYPES.POST_GUIDE_LIKE,
+            data,
         };
         dispatch(action);
     };

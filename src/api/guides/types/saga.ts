@@ -13,3 +13,10 @@ export interface IPost {
         >;
     taker(): IterableIterator<ForkEffect>;
 }
+
+export interface IPostLike {
+    caller(action: NSRedux.IPostLikeAction): IterableIterator<
+        CallEffect | PutEffect<NSRedux.IPostLikeSucceedAction>
+        >;
+    taker(): IterableIterator<ForkEffect>;
+}

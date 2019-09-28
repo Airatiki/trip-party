@@ -1,4 +1,4 @@
-import { IToPost, IGuide } from './instance';
+import { IToPost, IGuide, IToPostLike } from './instance';
 import { ACTIONS_TYPES } from '../constants';
 
 
@@ -32,8 +32,21 @@ export interface IPostSucceedAction {
     error?: object;
 }
 
+export interface IPostLikeAction {
+    type: ACTIONS_TYPES.POST_GUIDE_LIKE;
+    data: IToPostLike;
+}
+
+export interface IPostLikeSucceedAction {
+    type: ACTIONS_TYPES.POST_GUIDE_LIKE_SUCCEED;
+    data?: IToPostLike;
+    error?: object;
+}
+
 export type IReduxAction =
     IGetAction |
     IGetSucceedAction |
     IPostAction |
-    IPostSucceedAction;
+    IPostSucceedAction |
+    IPostLikeAction |
+    IPostLikeSucceedAction;
