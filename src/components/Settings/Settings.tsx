@@ -4,7 +4,7 @@ import { IProps, IReduxInjectedState, IReduxInjectedDispatch, IState } from './t
 import React, { Component, FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { Button, Cell, FormLayout, FormLayoutGroup, Radio, ScreenSpinner, Switch } from '@vkontakte/vkui';
+import { Button, Cell, FormLayout, FormLayoutGroup, Radio, Switch } from '@vkontakte/vkui';
 
 import { VISIBILITY } from 'api/travels/constants';
 import * as actions from 'api/profile/actions';
@@ -17,17 +17,6 @@ class Settings extends Component<IProps, IState> {
             travelsVisibility: this.props.profile.travelsVisibility,
             travelsAnonymity: this.props.profile.travelsAnonymity,
         };
-    }
-
-    public componentDidMount(): void {
-        if (!this.props.isLoaded) {
-            this.props.get();
-        }
-    }
-
-    public componentDidUpdate(): void {
-        const {error} = this.props;
-        error && console.log(error);
     }
 
     public onChangeTravelsVisibility = (event: FormEvent<HTMLInputElement>) => {
@@ -48,10 +37,6 @@ class Settings extends Component<IProps, IState> {
     };
 
     public render() {
-        if (!this.props.isLoaded) {
-            return <ScreenSpinner size='large'/>
-        }
-
         return(
             <FormLayout>
                 <FormLayoutGroup top='Показывать путешествия'>
@@ -106,15 +91,12 @@ class Settings extends Component<IProps, IState> {
     }
 }
 
-export default compose<typeof Settings>(
+export default compose(
     connect<IReduxInjectedState, IReduxInjectedDispatch>(
         (state: IReduxState) => ({
             profile: actions.getState(state),
-            isLoaded: actions.isLoaded(state),
-            error: actions.getError(state),
         }),
         (dispatch: Dispatch) => ({
-            get: actions.get(dispatch),
             put: actions.put(dispatch),
         }),
     )

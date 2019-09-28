@@ -25,6 +25,8 @@ import Guides from 'components/Guides';
 import Guide from 'components/Guide';
 import Settings from 'components/Settings';
 
+import * as profileActions from 'api/profile/actions';
+
 import connect from '@vkontakte/vk-connect';
 // Sends event to client
 connect.send('VKWebAppInit');
@@ -52,6 +54,8 @@ const history = createHistory.createBrowserHistory();
 const store = configureStore(history);
 
 sagaMiddleware.run(saga);
+
+profileActions.get(store.dispatch)();
 
 class App extends Component {
     public render() {
