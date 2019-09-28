@@ -11,14 +11,14 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from 'api/reducer';
 import saga from 'api/saga';
 
-import { View, Panel, Root } from '@vkontakte/vkui';
+import {View, Panel, Root} from '@vkontakte/vkui';
 
 import '@vkontakte/vkui/dist/vkui.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import CreateTravel from 'components/CreateTravel';
-import Travels from 'components/Travels';
+// import Travels from 'components/Travels';
 import Travel from 'components/Travel';
 import CreateGuide from 'components/CreateGuide';
 import Guides from 'components/Guides';
@@ -55,9 +55,12 @@ const store = configureStore(history);
 
 sagaMiddleware.run(saga);
 
-profileActions.get(store.dispatch)();
 
 class App extends Component {
+    public componentDidMount(): void {
+        profileActions.get(store.dispatch)();
+    }
+
     public render() {
         return (
             <Root activeView='view' className=''>
@@ -66,10 +69,10 @@ class App extends Component {
                         <Provider store={store}>
                             <Router history={history}>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/create_trip'/>
+                                    <Redirect exact={true} from='/' to='/trips/id'/>
 
                                     <Route exact={true} path='/create_trip' component={CreateTravel}/>
-                                    <Route exact={true} path='/trips' component={Travels}/>
+                                    {/*<Route exact={true} path='/trips' component={Travels}/>*/}
                                     <Route exact={true} path='/trips/:id' component={Travel}/>
 
                                     <Route exact={true} path='/create_guide' component={CreateGuide}/>
