@@ -27,9 +27,7 @@ export interface IState {
     startDate: Date;
     endDate: Date;
     description: string;
-    place: string;
     visibility: VISIBILITY;
-    budget: string;
     showTicketCost: boolean;
     chatLink: string;
 }

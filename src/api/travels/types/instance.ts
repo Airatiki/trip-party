@@ -9,11 +9,9 @@ export interface ITravel {
     authorId: string;
     name: string;
     description: string;
-    place: string;
     visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    budget: string;
     demoParticipants?: string[];
     showTicketCost: boolean;
     participants: IParticipant[];
@@ -27,11 +25,9 @@ export interface IToPost {
     authorId: string;
     name: string;
     description: string;
-    place: string;
     visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    budget: string;
     showTicketCost: boolean;
     chatLink: string;
 }
@@ -40,11 +36,9 @@ export interface IToPut {
     id: string;
     name: string;
     description: string;
-    place: string;
     visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    budget: string;
     showTicketCost: boolean;
     noNewPeople: boolean;
     chatLink: string;

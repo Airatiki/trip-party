@@ -20,10 +20,8 @@ class CreateTravel extends Component<IProps, IState> {
             name: '',
             startDate: new Date(),
             endDate: new Date(),
-            place: '',
             description: '',
             visibility: VISIBILITY.FRIENDS,
-            budget: '',
             showTicketCost: true,
             chatLink: '',
         };
@@ -87,15 +85,6 @@ class CreateTravel extends Component<IProps, IState> {
                         }
                     />
                 </FormLayoutGroup>
-                <FormLayoutGroup top='Место'>
-                    <Input
-                        defaultValue={this.state.place}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({place: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
                 <FormLayoutGroup top='Описание'>
                     <Textarea
                         value={this.state.description}
@@ -140,15 +129,6 @@ class CreateTravel extends Component<IProps, IState> {
                     >
                         Всем
                     </Radio>
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Примерный бюджет на человека'>
-                    <Input
-                        defaultValue={this.state.budget}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({budget: event.currentTarget.value})
-                        }
-                    />
                 </FormLayoutGroup>
                 <Checkbox
                     className='d-none'

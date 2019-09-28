@@ -65,18 +65,6 @@ class Display extends Component<IProps> {
                         {travel.description}
                     </div>
                     <Div>
-                        <div className='row'>
-                            <div className='col col-4'>
-                                <label className='col-form-label'>
-                                    Место:
-                                </label>
-                            </div>
-                            <div className='col col-8'>
-                                <Button className='w-100'>
-                                    {travel.place}
-                                </Button>
-                            </div>
-                        </div>
                         {
                             travel.showTicketCost &&
                             <div className='row'>
@@ -90,16 +78,6 @@ class Display extends Component<IProps> {
                                 </div>
                             </div>
                         }
-                        <div className='row'>
-                            <label className='col-form-label col col-4'>
-                                Бюджет:
-                            </label>
-                            <div className='col col-8'>
-                                <Button className='w-100'>
-                                    {travel.budget}
-                                </Button>
-                            </div>
-                        </div>
                         <div className='row'>
                             <label className='col-form-label col col-4'>
                                 Даты:

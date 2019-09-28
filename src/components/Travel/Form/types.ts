@@ -11,9 +11,7 @@ export interface IProps {
 export interface IState {
     name: string;
     description: string;
-    place: string;
     visibility: VISIBILITY
-    budget: string;
     startDate: Date;
     endDate: Date;
     showTicketCost: boolean;

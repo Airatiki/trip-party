@@ -28,9 +28,7 @@ class Form extends Component<IProps, IState> {
         this.state = {
             name: travel.name,
             description: travel.description,
-            place: travel.place,
             visibility: travel.visibility,
-            budget: travel.budget,
             startDate: travel.startDate,
             endDate: travel.endDate,
             showTicketCost: travel.showTicketCost,
@@ -81,38 +79,6 @@ class Form extends Component<IProps, IState> {
                         </div>
                     </div>
                     <Div>
-                        <div className='row'>
-                            <div className='col col-4'>
-                                <label className='col-form-label'>
-                                    Место:
-                                </label>
-                            </div>
-                            <div className='col col-8'>
-                                <Input
-                                    className='w-100'
-                                    defaultValue={this.state.place}
-                                    onChange={
-                                        (event: FormEvent<HTMLInputElement>) =>
-                                            this.setState({place: event.currentTarget.value})
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <label className='col-form-label col col-4'>
-                                Бюджет:
-                            </label>
-                            <div className='col col-8'>
-                                <Input
-                                    className='w-100'
-                                    defaultValue={this.state.budget}
-                                    onChange={
-                                        (event: FormEvent<HTMLInputElement>) =>
-                                            this.setState({budget: event.currentTarget.value})
-                                    }
-                                />
-                            </div>
-                        </div>
                         <div className='row'>
                             <label className='col-form-label col col-4'>
                                 Дата начала
