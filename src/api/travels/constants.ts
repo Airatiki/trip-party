@@ -10,7 +10,7 @@ export enum ACTIONS_TYPES {
 }
 
 export enum VISIBILITY {
-    FRIENDS,
-    FRIENDS_FRIENDS,
-    ALL,
+    FRIENDS = 'FRIENDS',
+    FRIENDS_FRIENDS = 'FRIENDS_FRIENDS',
+    ALL = 'ALL',
 }

@@ -1,63 +1,43 @@
 import { Dispatch } from 'redux';
 import { ACTIONS_TYPES } from './constants';
-import { IParticipant, IToPost, IToPut } from './types/instance';
+import { IParticipant, IToPost, IToPostNew } from './types/instance';
 import * as NSRedux from './types/redux';
 
 
-export function postToTravel(dispatch: Dispatch) {
+export function postNew(dispatch: Dispatch) {
+    return function(participant: IToPostNew): void {
+        const action: NSRedux.IPostNewAction = {
+            type: ACTIONS_TYPES.POST_NEW_PARTICIPANT,
+            participant,
+        };
+        dispatch(action);
+    }
+}
+
+export function post(dispatch: Dispatch) {
     return function(participant: IToPost): void {
-        const action: NSRedux.IPostToTravelAction = {
-            type: ACTIONS_TYPES.POST_PARTICIPANT_TO_TRAVEL,
+        const action: NSRedux.IPostAction = {
+            type: ACTIONS_TYPES.POST_PARTICIPANT,
             participant,
         };
         dispatch(action);
     };
 }
 
-export function postToEvent(dispatch: Dispatch) {
-    return function(participant: IToPost): void {
-        const action: NSRedux.IPostToEventAction = {
-            type: ACTIONS_TYPES.POST_PARTICIPANT_TO_EVENT,
-            participant,
-        };
-        dispatch(action);
-    };
-}
-
-export function putToTravel(dispatch: Dispatch) {
-    return function(participant: IToPut): void {
-        const action: NSRedux.IPutToTravelAction = {
-            type: ACTIONS_TYPES.PUT_PARTICIPANT_TO_TRAVEL,
-            participant,
-        };
-        dispatch(action);
-    };
-}
-
-export function putToEvent(dispatch: Dispatch) {
-    return function(participant: IToPut): void {
-        const action: NSRedux.IPutToEventAction = {
-            type: ACTIONS_TYPES.PUT_PARTICIPANT_TO_EVENT,
-            participant,
-        };
-        dispatch(action);
-    };
-}
-
-export function removeFromTravel(dispatch: Dispatch) {
+export function removeNew(dispatch: Dispatch) {
     return function(participant: IParticipant): void {
-        const action: NSRedux.IRemoveFromTravelAction = {
-            type: ACTIONS_TYPES.REMOVE_PARTICIPANT_FROM_TRAVEL,
+        const action: NSRedux.IRemoveNewAction = {
+            type: ACTIONS_TYPES.REMOVE_NEW_PARTICIPANT,
             participant,
         };
         dispatch(action);
     };
 }
 
-export function removeFromEvent(dispatch: Dispatch) {
+export function remove(dispatch: Dispatch) {
     return function(participant: IParticipant): void {
-        const action: NSRedux.IRemoveFromEventAction = {
-            type: ACTIONS_TYPES.REMOVE_PARTICIPANT_FROM_EVENT,
+        const action: NSRedux.IRemoveAction = {
+            type: ACTIONS_TYPES.REMOVE_PARTICIPANT,
             participant,
         };
         dispatch(action);

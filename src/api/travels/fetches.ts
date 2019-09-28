@@ -9,16 +9,53 @@ export default {
         return {
             travels: [
                 {
-                    id: 'id0',
+                    id: 'id',
+                    authorId: '',
                     name: 'Name',
-                    description: 'Description',
+                    description: 'Description Description Description Description Description Description Description ',
                     visibility: VISIBILITY.ALL,
                     startDate: new Date(),
                     endDate: new Date(),
                     place: 'Moya djopa',
-                    ticket: 'Some ticket',
-                    chat: 'some url',
-                    participants: [],
+                    budget: '11111',
+                    showTicketCost: true,
+                    newParticipants: [
+                        {
+                            id: 'kekIdqqqqqqqq',
+                            VkId: '123123',
+                            occasionId: 'id',
+                            firstName: 'Pop',
+                            lastName: 'Popo',
+                            image: 'https://iknowyourmeme.files.wordpress.com/2016/04/14280761127830.jpg?w=616',
+                        },
+                        {
+                            id: 'kekIdqrgasdf',
+                            VkId: '12354835654',
+                            occasionId: 'id',
+                            firstName: 'Pep',
+                            lastName: 'Pepe',
+                            image: 'https://iknowyourmeme.files.wordpress.com/2016/04/14280761127830.jpg?w=616',
+                        },
+                    ],
+                    demoParticipants: [],
+                    participants: [
+                        {
+                            id: 'kekIdutenhfbdg',
+                            VkId: '123',
+                            occasionId: 'id',
+                            firstName: 'Eric',
+                            lastName: 'Wolf',
+                            image: 'https://iknowyourmeme.files.wordpress.com/2016/04/14280761127830.jpg?w=616',
+                        },
+                        {
+                            id: 'kekId1euynhrdbgf',
+                            VkId: '1231',
+                            occasionId: 'id',
+                            firstName: 'Kek',
+                            lastName: 'Keken',
+                            image: 'https://iknowyourmeme.files.wordpress.com/2016/04/14280761127830.jpg?w=616',
+                        }
+                    ],
                 }
             ],
         };
@@ -28,9 +65,13 @@ export default {
         return {
             travel: {
                 id: 'kek',
+                authorId: 'id',
                 ...travel,
-                chat: 'url',
+                place: 'Some place',
                 participants: [],
+                budget: '11111',
+                showTicketCost: true,
+                newParticipants: [],
             }
         };
     },
@@ -39,6 +80,8 @@ export default {
         return {
             travel: {
                 ...travel,
+                authorId: 'id',
+                newParticipants: [],
                 participants: [],
             }
         };

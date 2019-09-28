@@ -3,7 +3,7 @@ import { ACTIONS_TYPES } from './constants';
 import { IState, IGetSucceedAction, IPostSucceedAction, IPutSucceedAction } from './types/redux';
 import { ACTIONS_TYPES as PARTICIPANTS_ACTIONS_TYPES } from '../participants/constants';
 import * as NSParticipantsRedux from '../participants/types/redux';
-import { postParticipant, putParticipant, removeParticipant } from './functions';
+import { postParticipant, postNewParticipant, removeNewParticipant, removeParticipant } from './functions';
 
 
 const initState: IState = {
@@ -65,8 +65,25 @@ export default function(state: IState = initState, action: IReduxAction) {
                 }
         }
 
-        case PARTICIPANTS_ACTIONS_TYPES.POST_PARTICIPANT_TO_TRAVEL_SUCCEED: {
-            const {participant, error} = <NSParticipantsRedux.IPostToTravelSucceedAction>action;
+        case PARTICIPANTS_ACTIONS_TYPES.POST_NEW_PARTICIPANT_SUCCEED: {
+            const {participant, error} = <NSParticipantsRedux.IPostNewSucceedAction>action;
+
+            return error ?
+                {
+                    ...state,
+                    error,
+                    isLoaded: true,
+                } :
+                {
+                    ...state,
+                    data: postNewParticipant(state.data, participant!),
+                    error: null,
+                    isLoaded: true,
+                }
+        }
+
+        case PARTICIPANTS_ACTIONS_TYPES.POST_PARTICIPANT_SUCCEED: {
+            const {participant, error} = <NSParticipantsRedux.IPostSucceedAction>action;
 
             return error ?
                 {
@@ -82,8 +99,8 @@ export default function(state: IState = initState, action: IReduxAction) {
                 }
         }
 
-        case PARTICIPANTS_ACTIONS_TYPES.PUT_PARTICIPANT_TO_TRAVEL_SUCCEED: {
-            const {participant, error} = <NSParticipantsRedux.IPutToTravelSucceedAction>action;
+        case PARTICIPANTS_ACTIONS_TYPES.REMOVE_NEW_PARTICIPANT_SUCCEED: {
+            const {participant, error} = <NSParticipantsRedux.IRemoveNewSucceedAction>action;
 
             return error ?
                 {
@@ -93,14 +110,14 @@ export default function(state: IState = initState, action: IReduxAction) {
                 } :
                 {
                     ...state,
-                    data: putParticipant(state.data, participant!),
+                    data: removeNewParticipant(state.data, participant!),
                     error: null,
                     isLoaded: true,
                 }
         }
 
-        case PARTICIPANTS_ACTIONS_TYPES.REMOVE_PARTICIPANT_FROM_TRAVEL_SUCCEED: {
-            const {participant, error} = <NSParticipantsRedux.IRemoveFromTravelSucceedAction>action;
+        case PARTICIPANTS_ACTIONS_TYPES.REMOVE_PARTICIPANT_SUCCEED: {
+            const {participant, error} = <NSParticipantsRedux.IRemoveSucceedAction>action;
 
             return error ?
                 {

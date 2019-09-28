@@ -1,19 +1,25 @@
 export interface IParticipant {
     id: string;
-    VkId: number;
+    VkId: string;
     occasionId: string;
-    role: string;
+    image: string;
+    firstName: string;
+    lastName: string;
+}
+
+export interface IToPostNew {
+    VkId: string;
+    occasionId: string;
+    image: string;
+    firstName: string;
+    lastName: string;
 }
 
 export interface IToPost {
-    VkId: number;
-    occasionId: string;
-    role: string;
-}
-
-export interface IToPut {
     id: string;
-    VkId: number;
+    VkId: string;
     occasionId: string;
-    role: string;
+    image: string;
+    firstName: string;
+    lastName: string;
 }

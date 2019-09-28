@@ -13,7 +13,9 @@ export interface IGetAction {
     filters: {
         city?: string,
         date?: Date,
-    }
+    },
+    friends: string[],
+    ownerId: string
 }
 
 export interface IGetSucceedAction {

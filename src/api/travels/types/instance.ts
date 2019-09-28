@@ -5,35 +5,39 @@ import { VISIBILITY } from '../constants';
 
 export interface ITravel {
     id: string;
+    authorId: string;
     name: string;
     description: string;
-    visibility: VISIBILITY,
+    place: string;
+    visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    place: string;
-    ticket: string;
-    chat: string;
+    budget: string;
+    demoParticipants?: string[];
+    showTicketCost: boolean;
     participants: IParticipant[];
+    newParticipants: IParticipant[];
 }
 
 export interface IToPost {
     name: string;
     description: string;
-    visibility: VISIBILITY,
+    place: string;
+    visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    place: string;
-    ticket: string;
+    budget: string;
+    showTicketCost: boolean;
 }
 
 export interface IToPut {
     id: string;
     name: string;
     description: string;
-    visibility: VISIBILITY,
+    place: string;
+    visibility: VISIBILITY;
     startDate: Date;
     endDate: Date;
-    place: string;
-    ticket: string;
-    chat: string;
+    budget: string;
+    showTicketCost: boolean;
 }

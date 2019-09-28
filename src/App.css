@@ -1,0 +1,7 @@
+:root {
+    /*--background_content: linear-gradient(216deg, #662D8C 20%, #ED1E79 73%);*/
+}
+
+.App {
+    background: var(--background_content);
+}

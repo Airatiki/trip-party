@@ -4,6 +4,9 @@
     "tslint-react"
   ],
   "rules": {
+    "no-empty": false,
+    "no-unused-expression": false,
+    "no-empty-interface": false,
     "no-console": false,
     "no-namespace": false,
     "object-literal-sort-keys": false,

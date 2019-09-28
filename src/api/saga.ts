@@ -1,13 +1,15 @@
 import { all, ForkEffect } from 'redux-saga/effects';
 
 import travels from './travels/saga';
-import events from './events/saga';
+import participants from './participants/saga';
+import profile from './profile/saga';
 
 
 const sagas: IterableIterator<ForkEffect>[] = [];
 const instances = {
     travels,
-    events,
+    participants,
+    profile,
 };
 
 for (const saga of Object.values(instances)) {

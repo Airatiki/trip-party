@@ -1,20 +1,18 @@
+import { VISIBILITY } from 'api/travels/constants';
+
+
 export interface IProfile {
     id: string;
-    VkId: number;
-    eventsAnonymity: boolean;
-    travelsAnonymity: boolean;
-}
-
-export interface IToPost {
-    id: string;
-    VkId: number;
-    eventsAnonymity: boolean;
+    VkId: string;
+    friends: string[];
+    travelsVisibility: VISIBILITY;
     travelsAnonymity: boolean;
 }
 
 export interface IToPut {
     id: string;
-    VkId: number;
-    eventsAnonymity: boolean;
+    VkId: string;
+    friends: string[];
+    travelsVisibility: VISIBILITY;
     travelsAnonymity: boolean;
 }

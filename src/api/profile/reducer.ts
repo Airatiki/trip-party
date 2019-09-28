@@ -1,13 +1,16 @@
-import { IReduxAction } from '../types';
-import { ACTIONS_TYPES } from './constants';
 import { IState, IGetSucceedAction, IPutSucceedAction } from './types/redux';
+import { IReduxAction } from '../types';
+
+import { ACTIONS_TYPES } from './constants';
+import { VISIBILITY } from 'api/travels/constants';
 
 
 const initState: IState = {
     data: {
         id: '',
-        VkId: -1,
-        eventsAnonymity: false,
+        VkId: '',
+        friends: [],
+        travelsVisibility: VISIBILITY.FRIENDS,
         travelsAnonymity: false,
     },
     isLoaded: false,

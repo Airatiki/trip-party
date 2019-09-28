@@ -2,23 +2,30 @@ import { CallEffect, ForkEffect, PutEffect } from 'redux-saga/effects';
 import * as NSRedux from './redux';
 
 
-export interface IPost {
-    caller(action: NSRedux.IPostToTravelAction | NSRedux.IPostToEventAction): IterableIterator<
-        CallEffect | PutEffect<NSRedux.IPostToTravelSucceedAction | NSRedux.IPostToEventSucceedAction>
+export interface IPostNew {
+    caller(action: NSRedux.IPostNewAction): IterableIterator<
+        CallEffect | PutEffect<NSRedux.IPostNewSucceedAction>
         >;
     taker(): IterableIterator<ForkEffect>;
 }
 
-export interface IPut {
-    caller(action: NSRedux.IPutToTravelAction | NSRedux.IPutToEventAction): IterableIterator<
-        CallEffect | PutEffect<NSRedux.IPutToTravelSucceedAction | NSRedux.IPutToEventSucceedAction>
+export interface IPost {
+    caller(action: NSRedux.IPostAction): IterableIterator<
+        CallEffect | PutEffect<NSRedux.IPostSucceedAction>
+        >;
+    taker(): IterableIterator<ForkEffect>;
+}
+
+export interface IRemoveNew {
+    caller(action: NSRedux.IRemoveNewAction): IterableIterator<
+        CallEffect | PutEffect<NSRedux.IRemoveNewSucceedAction>
         >;
     taker(): IterableIterator<ForkEffect>;
 }
 
 export interface IRemove {
-    caller(action: NSRedux.IRemoveFromTravelAction | NSRedux.IRemoveFromEventAction): IterableIterator<
-        CallEffect | PutEffect<NSRedux.IRemoveFromTravelSucceedAction | NSRedux.IRemoveFromEventSucceedAction>
+    caller(action: NSRedux.IRemoveAction): IterableIterator<
+        CallEffect | PutEffect<NSRedux.IPostSucceedAction>
         >;
     taker(): IterableIterator<ForkEffect>;
 }

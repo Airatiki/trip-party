@@ -18,10 +18,12 @@ export function isLoaded({travels}: IReduxState) {
 }
 
 export function get(dispatch: Dispatch) {
-    return function(filters: NSRedux.IGetAction['filters']): void {
+    return function(filters: NSRedux.IGetAction['filters'], friends: string[], ownerId: string): void {
         const action: NSRedux.IGetAction = {
             type: ACTIONS_TYPES.GET_TRAVELS,
             filters,
+            friends,
+            ownerId
         };
         dispatch(action);
     };

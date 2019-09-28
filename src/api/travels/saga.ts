@@ -5,16 +5,30 @@ import fetches from './fetches';
 import * as NSFetch from './types/fetchResult';
 import * as NSRedux from './types/redux';
 import { IGet, IPost, IPut } from './types/saga';
+import {getAvatars, getDemoParticipantIds} from "../../helpers";
 
 
 export default {
     get(): IGet {
         function* caller(action: NSRedux.IGetAction) {
             const {travels, error}: NSFetch.IGet = yield call(fetches.get, action.filters);
+
+            const newTravels = [];
+
+            if (!!travels) {
+                for (const travel of travels) {
+                    const getIds = getDemoParticipantIds(travel.participants, action.friends, action.ownerId);
+                    const result = yield call(getAvatars, getIds);
+
+                    newTravels.push({...travel, demoParticipants: result});
+                    console.log(getIds);
+                }
+            }
+
             const success: NSRedux.IGetSucceedAction = {
                 type: ACTIONS_TYPES.GET_TRAVELS_SUCCEED,
                 error,
-                travels,
+                travels: newTravels,
             };
 
             yield put(success);
