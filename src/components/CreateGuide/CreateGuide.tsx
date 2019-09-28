@@ -4,15 +4,26 @@ import { IReduxState } from "api/types";
 import React, { Component, FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { Button, FormLayout, FormLayoutGroup, Input, Textarea } from "@vkontakte/vkui";
+import { Button, FormLayout, FormLayoutGroup, Input, Textarea, Div } from "@vkontakte/vkui";
+import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 
 import * as actions from 'api/guides/actions';
 import * as profileActions from 'api/profile/actions';
 
 import Tags from './Tags';
+import Place from "./Place";
+import { IPlace } from "../../api/guides/types/instance";
 
 
 class CreateGuide extends Component<IProps, IState> {
+    public defaultPlace: IPlace = {
+        name: 'Новое место',
+        description: '',
+        photo: '',
+        lat: '',
+        lng: '',
+    };
+    
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -33,6 +44,31 @@ class CreateGuide extends Component<IProps, IState> {
         });
     };
 
+    public onAddNewPlace = () => {
+        const {places} = this.state;
+        this.setState({
+            places: [...places, {...this.defaultPlace}],
+        });
+    };
+
+
+    public onSavePlace = (index: number, place: IPlace) => {
+        const {places} = this.state;
+
+        places[index] = {
+            ...place,
+        };
+        this.setState({places: [...places]});
+    };
+
+    public onRemovePlace = (index: number) => {
+        const {places} = this.state;
+
+        this.setState({
+            places: places.filter((place, i) => index !== i),
+        });
+    };
+    
     public render() {
         return(
             <FormLayout>
@@ -73,7 +109,23 @@ class CreateGuide extends Component<IProps, IState> {
                     />
                 </FormLayoutGroup>
                 <FormLayoutGroup top='Места'>
-                    <div/>
+                    {
+                        this.state.places.map(
+                            (place, i) =>
+                                <Place
+                                    key={i}
+                                    index={i}
+                                    onSave={this.onSavePlace}
+                                    onRemove={this.onRemovePlace}
+                                    {...place}
+                                />
+                        )
+                    }
+                    <Div className='d-flex flex-row justify-content-end'>
+                        <Icon28AddOutline
+                            onClick={this.onAddNewPlace}
+                        />
+                    </Div>
                 </FormLayoutGroup>
                 <Button size='xl' onClick={this.onSave}>
                     Сохранить
