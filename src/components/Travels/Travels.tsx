@@ -7,7 +7,6 @@ import { compose, Dispatch } from 'redux';
 
 import * as actions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
-import './Travels.css';
 import {
     Cell, Checkbox,
     FormLayout, FormLayoutGroup, Group,
@@ -109,9 +108,7 @@ class Travels extends Component<IProps, IFilterState> {
     }
 
     public componentDidMount(): void {
-        this.props.get({
-            city: '',
-        }, this.props.profile.friends, this.props.profile.VkId);
+        this.props.get({}, this.props.profile.friends, this.props.profile.VkId);
     }
 
     public componentDidUpdate(): void {
