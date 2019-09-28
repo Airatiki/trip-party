@@ -5,6 +5,7 @@ import Icon28Write from '@vkontakte/icons/dist/28/write';
 import Icon28Delete from '@vkontakte/icons/dist/28/delete';
 import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
 import { Div, FormLayout, FormLayoutGroup, Input, Textarea } from "@vkontakte/vkui";
+import LeafletSearch from "../../Helpers/LeafletSearch";
 
 
 class Place extends Component<IProps, IState> {
@@ -85,6 +86,15 @@ class Place extends Component<IProps, IState> {
                                 }
                             />
                         </FormLayoutGroup>
+                        <LeafletSearch
+                            onChange={
+                                (data: {lat: string, lng: string}) =>
+                                    this.setState({...data})}
+                            defaultLatLng={{
+                                lat: this.state.lat,
+                                lng: this.state.lng,
+                            }}
+                        />
                     </FormLayout>
                 }
             </Div>

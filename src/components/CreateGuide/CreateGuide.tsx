@@ -20,8 +20,8 @@ class CreateGuide extends Component<IProps, IState> {
         name: 'Новое место',
         description: '',
         photo: '',
-        lat: '',
-        lng: '',
+        lat: '59.93318000000005',
+        lng: '30.306040000000053',
     };
     
     constructor(props: IProps) {

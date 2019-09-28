@@ -18,6 +18,7 @@
     "bootstrap": "^4.3.1",
     "chalk": "^2.4.2",
     "core-js": "^3.1.4",
+    "esri-leaflet-geocoder": "^2.2.14",
     "history": "^4.7.2",
     "leaflet": "^1.5.1",
     "prop-types": "^15.7.2",

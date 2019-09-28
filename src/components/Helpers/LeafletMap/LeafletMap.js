@@ -57,7 +57,7 @@ class LeafletMap extends Component {
                 >
                     <TileLayer
                         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                        url='http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+                        url={'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
                     />
                     <Marker position={position}/>
                 </Map>
