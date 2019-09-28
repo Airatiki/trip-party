@@ -1,5 +1,6 @@
 import { VISIBILITY } from '../../api/travels/constants';
 import { dateToHtml } from '../../helpers';
+import { IReduxState } from "api/types";
 import { IProps, IReduxInjectedDispatch, IReduxInjectedState, IState } from './types';
 
 import React, { Component, FormEvent } from 'react';
@@ -10,7 +11,7 @@ import { Input, FormLayout, FormLayoutGroup, Radio, Textarea, Checkbox, Button }
 
 import * as travelsActions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
-import { IReduxState } from "../../api/types";
+import * as guidesActions from 'api/guides/actions';
 
 
 class CreateTravel extends Component<IProps, IState> {
@@ -45,9 +46,10 @@ class CreateTravel extends Component<IProps, IState> {
     };
 
     public onSave = () => {
+        const guide = this.props.guides.find((guide) => guide.id === this.props.location!.state!.guideId);
         this.props.post({
             ...this.state,
-            guideId: this.props.location.state!.guideId!,
+            guide: guide!,
             authorId: this.props.profile.VkId,
         });
     };
@@ -151,9 +153,10 @@ export default compose(
     connect<IReduxInjectedState, IReduxInjectedDispatch>(
         (state: IReduxState) => ({
             profile: profileActions.getState(state),
+            guides: guidesActions.getState(state),
         }),
         (dispatch: Dispatch) => ({
             post: travelsActions.post(dispatch),
-        })
+        }),
     )
 )(withRouter(CreateTravel));

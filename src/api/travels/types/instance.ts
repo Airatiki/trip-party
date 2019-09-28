@@ -1,11 +1,12 @@
 import { IParticipant } from 'api/participants/types/instance';
+import { IGuide } from "api/guides/types/instance";
 
 import { VISIBILITY } from '../constants';
 
 
 export interface ITravel {
     id: string;
-    guideId: string;
+    guide: IGuide;
     authorId: string;
     name: string;
     description: string;
@@ -21,7 +22,7 @@ export interface ITravel {
 }
 
 export interface IToPost {
-    guideId: string;
+    guide: IGuide;
     authorId: string;
     name: string;
     description: string;

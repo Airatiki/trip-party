@@ -1,10 +1,12 @@
 import { IToPost } from 'api/travels/types/instance';
 import { VISIBILITY } from 'api/travels/constants';
 import { IProfile } from "api/profile/types/instance";
+import { IGuide } from "api/guides/types/instance";
 
 
 export interface IReduxInjectedState {
-    profile: IProfile
+    profile: IProfile;
+    guides: IGuide[];
 }
 
 export interface IReduxInjectedDispatch {
