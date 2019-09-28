@@ -4,11 +4,12 @@ import { IReduxState } from 'api/types';
 import React, {Component, FormEvent} from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
+import { withRouter } from 'react-router';
 
 import * as actions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
 import {
-    Cell, Checkbox,
+    Cell,
     FormLayout, FormLayoutGroup, Group,
     HeaderButton, Input,
     IS_PLATFORM_ANDROID, IS_PLATFORM_IOS, List,
@@ -19,7 +20,8 @@ import {
     ScreenSpinner, Search, Slider,
     Tabs,
     TabsItem,
-    View
+    View,
+    Div
 } from "@vkontakte/vkui";
 import {OS} from "@vkontakte/vkui/dist/lib/platform";
 import TravelDemo from "./TravelDemo";
@@ -30,17 +32,27 @@ import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 import Icon24Sort from '@vkontakte/icons/dist/24/sort';
 
 import {dateToHtml} from "../../helpers";
+import { TAGS } from "../../api/guides/constants";
+import Tags from "../CreateGuide/Tags";
 
 const MODAL_PAGE_FILTERS = 'filters';
 
 interface IFilterState {
+    tab: TABS,
     activeModal: any,
     modalHistory: any,
     search: '',
     searchList: [],
     budget: number,
     startDate: Date,
-    endDate: Date
+    endDate: Date;
+    friends: boolean;
+    tags: TAGS[];
+}
+
+enum TABS {
+    ALL = 'ALL',
+    MY = 'MY',
 }
 
 class Travels extends Component<IProps, IFilterState> {
@@ -54,21 +66,37 @@ class Travels extends Component<IProps, IFilterState> {
         this.theme = platform() === OS.IOS ? 'header' : 'light';
 
         this.state = {
+            tab: TABS.ALL,
             activeModal: null,
             modalHistory: [],
             budget: 1000,
             search: '',
             searchList: [],
             startDate: new Date(),
-            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+            friends: false,
+            tags: [],
         };
 
         this.users = ['123', '123'];
 
         this.modalBack = () => {
             this.setActiveModal(this.state.modalHistory[this.state.modalHistory.length - 2]);
+            this.callGet();
         };
     }
+
+    public callGet = () => {
+        this.props.get({
+            city: this.state.search,
+            tags: this.state.tags,
+            budget: `${Math.round(this.state.budget)}`,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            friends: this.state.friends,
+            mine: this.state.tab === TABS.MY,
+        }, this.props.profile.friends, this.props.profile.VkId);
+    };
 
     public setActiveModal(activeModal: any) {
         activeModal = activeModal || null;
@@ -115,6 +143,11 @@ class Travels extends Component<IProps, IFilterState> {
         const {error} = this.props;
         error && console.log(error);
     }
+
+    public onChangeTab = (tab: TABS) => {
+        this.setState({tab});
+        this.callGet();
+    };
 
     public render() {
         const modal = (
@@ -171,16 +204,10 @@ class Travels extends Component<IProps, IFilterState> {
                         </FormLayoutGroup>
 
                         <FormLayoutGroup top="Хэштеги">
-                            <Checkbox
-                                onChange={(e) => {
-                                console.log(e.currentTarget.checked);
-                            }}
-                            >
-                                Спорт
-                            </Checkbox>
-                            <Checkbox>Бухло</Checkbox>
-                            <Checkbox>Рыбалка</Checkbox>
-                            <Checkbox>Сиськи</Checkbox>
+                            <Tags
+                                addedTags={this.state.tags}
+                                onChange={(tags) => this.setState({tags: [...tags]})}
+                            />
                         </FormLayoutGroup>
 
                         <FormLayoutGroup top="Бюджет" bottom={`${Math.round(this.state.budget)}P`}>
@@ -197,11 +224,9 @@ class Travels extends Component<IProps, IFilterState> {
 
                             />
                         </FormLayoutGroup>
-
                         <FormLayoutGroup top="Дата начала">
                                 <Input
                                     type='date'
-                                    className='w-100'
                                     defaultValue={dateToHtml(this.state.startDate)}
                                     onChange={
                                         (event: FormEvent<HTMLInputElement>) =>
@@ -209,11 +234,9 @@ class Travels extends Component<IProps, IFilterState> {
                                     }
                                 />
                         </FormLayoutGroup>
-
                         <FormLayoutGroup top="Дата конца">
                                 <Input
                                     type='date'
-                                    className='w-100'
                                     defaultValue={dateToHtml(this.state.endDate)}
                                     onChange={
                                         (event: FormEvent<HTMLInputElement>) =>
@@ -221,12 +244,24 @@ class Travels extends Component<IProps, IFilterState> {
                                     }
                                 />
                         </FormLayoutGroup>
-
                         <FormLayoutGroup top="Отображать путешествия">
-                            <Radio name="sex" value={0} defaultChecked={true}>Всех пользователей</Radio>
-                            <Radio name="sex" value={1}>Только друзей</Radio>
+                            <Radio
+                                name="sex"
+                                value={false}
+                                checked={!this.state.friends}
+                                onChange={() => this.setState({friends: false})}
+                            >
+                                Всех пользователей
+                            </Radio>
+                            <Radio
+                                name="sex"
+                                value={true}
+                                checked={this.state.friends}
+                                onChange={() => this.setState({friends: true})}
+                            >
+                                Только друзей
+                            </Radio>
                         </FormLayoutGroup>
-
                     </FormLayout>
                 </ModalPage>
 
@@ -240,38 +275,39 @@ class Travels extends Component<IProps, IFilterState> {
         return(
             <div className='background-screen'>
                 <View activePanel="modals" modal={modal}>
-                    <div>kek</div>
-
                     <Panel id="modals">
                         <PanelHeader
-                            left={<div>
-                                <HeaderButton
-                                    key="anonimus"
-                                    data-to="home"
-                                >
-                                    <Icon24BrowserBack/>
-                                </HeaderButton>
-                                <HeaderButton
-                                    key="filter"
-                                    data-to="home"
-                                    onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
-                                >
-                                    <Icon24Sort/>
-                                </HeaderButton></div>
+                            left={
+                                <Div className='d-flex flex-row'>
+                                    <Icon24BrowserBack
+                                        className='mr-2'
+                                        onClick={this.props.history.goBack()}
+                                    />
+                                    <Icon24Sort
+                                        onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
+                                    />
+                                </Div>
+                            }
+                            children={
+                                <div>Путешествия</div>
                             }
                         />
-                        <Tabs theme={this.theme}>
-                            <TabsItem
-                                selected={true}
-                            >
-                                Путешествия
-                            </TabsItem>
-                            <TabsItem
-                                selected={false}
-                            >
-                                События
-                            </TabsItem>
-                        </Tabs>
+                        <Div>
+                            <Tabs theme={this.theme}>
+                                <TabsItem
+                                    selected={this.state.tab === TABS.ALL}
+                                    onClick={() => this.onChangeTab(TABS.ALL)}
+                                >
+                                    Все
+                                </TabsItem>
+                                <TabsItem
+                                    selected={this.state.tab === TABS.MY}
+                                    onClick={() => this.onChangeTab(TABS.MY)}
+                                >
+                                    Мои
+                                </TabsItem>
+                            </Tabs>
+                        </Div>
 
                         <div className='background-screen'>
                             {
@@ -299,4 +335,4 @@ export default compose(
             get: actions.get(dispatch),
         }),
     ),
-)(Travels);
+)(withRouter(Travels));

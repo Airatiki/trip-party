@@ -1,5 +1,6 @@
 import { IToPost, IToPut, ITravel } from './instance';
 import { ACTIONS_TYPES } from '../constants';
+import { TAGS } from "../../guides/constants";
 
 
 export interface IState {
@@ -12,6 +13,13 @@ export interface IGetAction {
     type: ACTIONS_TYPES.GET_TRAVELS,
     filters: {
         id?: string;
+        city?: string;
+        tags?: TAGS[];
+        budget?: string;
+        startDate?: Date;
+        endDate?: Date;
+        friends?: boolean;
+        mine?: boolean;
     },
     friends: string[],
     ownerId: string

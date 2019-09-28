@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import CreateTravel from 'components/CreateTravel';
-// import Travels from 'components/Travels';
+import Travels from 'components/Travels';
 import Travel from 'components/Travel';
 import CreateGuide from 'components/CreateGuide';
 import Guides from 'components/Guides';
@@ -69,10 +69,10 @@ class App extends Component {
                         <Provider store={store}>
                             <Router history={history}>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/trips/id'/>
+                                    <Redirect exact={true} from='/' to='/trips'/>
 
                                     <Route exact={true} path='/create_trip' component={CreateTravel}/>
-                                    {/*<Route exact={true} path='/trips' component={Travels}/>*/}
+                                    <Route exact={true} path='/trips' component={Travels}/>
                                     <Route exact={true} path='/trips/:id' component={Travel}/>
 
                                     <Route exact={true} path='/create_guide' component={CreateGuide}/>
