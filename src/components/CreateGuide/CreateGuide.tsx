@@ -4,7 +4,7 @@ import { IReduxState } from "api/types";
 import React, { Component, FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { Button, FormLayout, FormLayoutGroup, Input, Textarea, Div } from "@vkontakte/vkui";
+import { Button, FormLayout, FormLayoutGroup, Input, Textarea, Div, Group, List, Cell, Search } from "@vkontakte/vkui";
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 
 import * as actions from 'api/guides/actions';
@@ -35,6 +35,7 @@ class CreateGuide extends Component<IProps, IState> {
             budget: '',
             places: [],
             tags: [],
+            searchList: [],
         };
     }
 
@@ -68,6 +69,24 @@ class CreateGuide extends Component<IProps, IState> {
             places: places.filter((place, i) => index !== i),
         });
     };
+
+    public maps() {
+        if (!this.state.city) {
+            return;
+        }
+
+        const travelApi = `https://autocomplete.travelpayouts.com/places2?term=${this.state.city}&locale=ru`;
+
+        fetch(travelApi)
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({searchList: data})
+            })
+            .catch((e) => {
+                console.log(e);
+                this.setState({searchList: []})
+            })
+    }
     
     public render() {
         return(
@@ -98,6 +117,39 @@ class CreateGuide extends Component<IProps, IState> {
                                 this.setState({budget: event.currentTarget.value})
                         }
                     />
+                </FormLayoutGroup>
+                <FormLayoutGroup top="Город">
+                    <Search
+                        value={this.state.city}
+                        onChange={(e: any) => {
+                            this.setState({ city: e.replace(/\s+/g, ' ') });
+                            this.maps();
+                        }}
+                    />
+                    {
+                        !!this.state.searchList.length &&
+                        <Group title={`Список мест по запросу "${this.state.city}"`}>
+                            <List>
+                                {
+                                    this.state.searchList.map((list: any, index) => {
+                                            return (
+                                                <Cell
+                                                    key={index}
+                                                    multiline={true}
+                                                    description={`${list.country_name}`}
+                                                    onClick={(value) => {
+                                                        this.setState({city: list.name, searchList: []})
+                                                    }}
+                                                >
+                                                    {`${list.name}`}
+                                                </Cell>
+                                            );
+                                        }
+                                    )
+                                }
+                            </List>
+                        </Group>
+                    }
                 </FormLayoutGroup>
                 <FormLayoutGroup top='Тэги'>
                     <Tags

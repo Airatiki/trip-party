@@ -167,7 +167,6 @@ class Travels extends Component<IProps, IFilterState> {
                     }
                 >
                     <FormLayout>
-
                         <FormLayoutGroup top="Город">
                             <Search
                                 value={this.state.search}
@@ -188,7 +187,6 @@ class Travels extends Component<IProps, IFilterState> {
                                                             multiline={true}
                                                             description={`${list.country_name}`}
                                                             onClick={(value) => {
-                                                                console.log(value)
                                                                 this.setState({search: list.name, searchList: []})
                                                             }}
                                                         >

@@ -22,4 +22,5 @@ export interface IState {
     budget: string;
     places: IPlace[];
     tags: TAGS[];
+    searchList: [];
 }
