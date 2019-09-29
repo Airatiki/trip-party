@@ -3,7 +3,7 @@ import {IGet, IPost} from './types/fetchResult';
 import {IToPost} from './types/instance';
 import * as NSRedux from './types/redux';
 import {API_URL} from "../../helpers";
-
+import { dateToHtml } from 'helpers';
 
 // const guide =                 {
 //     id: 'kekGuideId',
@@ -73,12 +73,11 @@ export default {
         const travels = result.map((travel: any) => {
             const newParticipants = [];
             const participants = [];
-
             for (const person of travel.participants) {
                 const participant = {
                     id: person.id,
-                    VkId: person.VkId,
-                    occasionId: travel.trip_id,
+                    VkId: person.userId,
+                    occasionId: travel.id,
                     firstName: '',
                     lastName: '',
                     image: '',
@@ -90,11 +89,10 @@ export default {
                     newParticipants.push(person);
                 }
             }
-
             return {
                 id: travel.id.toString(),
                 guide:  travel.guide,
-                authorId: travel.creator_id,
+                authorId: travel.orgId.toString(),
                 name: travel.name,
                 description: travel.description,
                 visibility: travel.visibility === VISIBILITY.ALL ? VISIBILITY.ALL : VISIBILITY.FRIENDS,
@@ -176,19 +174,22 @@ export default {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                orgId: travel.authorId,
+                orgId: parseInt(travel.authorId, 10),
                 visibility: travel.visibility === VISIBILITY.FRIENDS ? 0 : 1,
-                startDate: travel.startDate,
-                finishDate: travel.endDate,
+                name: travel.name,
+                description: travel.description,
+                startDate: dateToHtml(travel.startDate),
+                finishDate: dateToHtml(travel.endDate),
                 chat: travel.chatLink,
-                guide: travel.guide
+                guide: {
+                    ...travel.guide,
+                    guide_id: parseInt(travel.guide.id, 10),
+                }
             })
         });
-
         request = await request.json();
 
         const result = (request as any).result;
-
         const newParticipants = [];
         const participants = [];
 
@@ -196,7 +197,7 @@ export default {
             const participant = {
                 id: person.id,
                 VkId: person.VkId,
-                occasionId: result.trip_id,
+                occasionId: result.id,
                 firstName: '',
                 lastName: '',
                 image: '',
@@ -209,10 +210,9 @@ export default {
             }
         }
 
-
         return {
             travel: {
-                id: result.trip_id,
+                id: result.id.toString(),
                 ...travel,
                 participants,
                 showTicketCost: true,
@@ -233,6 +233,8 @@ export default {
                 orgId: travel.authorId,
                 visibility: travel.visibility === VISIBILITY.FRIENDS ? 0 : 1,
                 startDate: travel.startDate,
+                name: travel.name,
+                description: travel.description,
                 finishDate: travel.endDate,
                 chat: travel.chatLink,
                 guide: travel.guide
@@ -249,7 +251,7 @@ export default {
         for (const person of result.participants) {
             const participant = {
                 id: person.id,
-                VkId: person.VkId,
+                VkId: person.userId,
                 occasionId: result.trip_id,
                 firstName: '',
                 lastName: '',

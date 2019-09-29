@@ -14,6 +14,7 @@ import * as actions from 'api/guides/actions';
 import * as profileAction from 'api/profile/actions';
 
 import Place from "./Place";
+import Footer from "../Footer/Footer";
 
 
 class Guide extends Component<IProps> {
@@ -178,6 +179,9 @@ class Guide extends Component<IProps> {
                         )
                     }
                 </Group>
+                <div className='mt-4'>
+                    <Footer/>
+                </div>
             </Fragment>
         );
     }
