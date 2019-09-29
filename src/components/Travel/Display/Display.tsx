@@ -62,7 +62,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
 
     public render() {
         const {profile, travel, onEdit} = this.props;
-        const isAdmin = travel.authorId === profile.VkId;
+        const isAdmin = travel.authorId.toString() === profile.VkId.toString();
         const requestHasBeenSent = travel
             .newParticipants.find((participant) => participant.VkId === profile.VkId);
 
