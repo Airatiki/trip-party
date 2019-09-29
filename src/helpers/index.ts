@@ -1,6 +1,8 @@
 import {IParticipant} from "../api/participants/types/instance";
 import connect from '@vkontakte/vk-connect';
 
+export const API_URL = 'https://50bb7342.ngrok.io/trip-and-party-1.0';
+
 export function dateToHtml(date: Date): string {
     const year = date.getFullYear();
     const month = date.getMonth()+1;

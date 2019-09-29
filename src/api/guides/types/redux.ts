@@ -12,6 +12,9 @@ export interface IGetAction {
     type: ACTIONS_TYPES.GET_GUIDES;
     filters: {
         id?: string;
+        city?: string;
+        tags?: string[];
+        budget?: string;
     };
 }
 
