@@ -2,6 +2,7 @@ import {IParticipant} from "../api/participants/types/instance";
 import connect from '@vkontakte/vk-connect';
 
 export const API_URL = 'https://f0b20227.ngrok.io/trip-and-party-1.0';
+export const APP_ID = 7150219;
 
 export function dateToHtml(date: Date): string {
     const year = date.getFullYear();
@@ -56,7 +57,7 @@ export function getDemoParticipantIds(participants: IParticipant[], friends: str
 export async function getAvatars(ids: string[]) {
     try {
         const data = await connect.sendPromise("VKWebAppGetAuthToken",
-            {app_id: 7143877, scope: "friends,status"});
+            {app_id: APP_ID, scope: "friends,status"});
 
         // TODO: Load users instead of friends
         const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
@@ -88,7 +89,7 @@ interface IData {
 export async function getParticipantsData(ids: string): Promise<IData[] | null> {
     try {
         const data = await connect.sendPromise("VKWebAppGetAuthToken",
-            {app_id: 7143877, scope: "friends,status"});
+            {app_id: APP_ID, scope: "friends,status"});
 
         // TODO: Load users instead of friends
         const items = await connect.sendPromise('VKWebAppCallAPIMethod', {

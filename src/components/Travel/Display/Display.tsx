@@ -2,7 +2,7 @@ import { IProps, IReduxInjectedState, IReduxInjectedDispatch } from './types';
 import { IReduxState } from 'api/types';
 
 import React, { Fragment, Component } from 'react';
-import { connect } from 'react-redux';
+import { connect as kek} from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import { Button, Div } from '@vkontakte/vkui';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
@@ -10,10 +10,12 @@ import Icon24Write from '@vkontakte/icons/dist/24/write';
 import * as profileActions from 'api/profile/actions';
 import * as participantsActions from 'api/participants/actions';
 
-import { formatDate } from 'helpers';
+import {APP_ID, formatDate} from 'helpers';
 
 import Participant from 'components/Helpers/Participant';
 import NewParticipant from 'components/Helpers/NewParticipant';
+import VKStories from 'vk-stories';
+import connect from '@vkontakte/vkui-connect-promise';
 
 
 class Display extends Component<IProps, {ticket: {cost: string, link: string}}> {
@@ -58,6 +60,32 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
         const linkToTickets = `https://www.aviasales.ru/search/${arriveFromCode}${originDay}${originMonth}${arriveToCode}${destinationDay}${destinationMonth}1`;
 
         this.setState({ticket: {cost: cheapestTicketCost, link: linkToTickets}});
+    }
+
+    public createStory() {
+        const fields = [
+            {
+                x: 540,
+                y: 1133,
+                value: `${this.props.travel.startDate} - ${this.props.travel.endDate}`,
+                font: "96px Arial",
+                align: "center",
+                color: "#FFFFFF"
+            }
+        ];
+        VKStories.init(connect);
+        // @ts-ignore
+        VKStories.generateStoryFromTemplate(require("./assets/kek.png"), fields)
+            .then((story: any) => {
+                VKStories.shareStory(APP_ID, story, { add_to_news: true })
+                    .then((result: any) => {
+                        console.log(result);
+                        // code
+                    })
+                    .catch(console.error);
+                // code
+            })
+            .catch(console.error);
     }
 
     public render() {
@@ -145,6 +173,17 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                                 </div>
                             </div>
                         }
+                        <div className='row'>
+                            <label className='col-form-label col col-4'/>
+                            <div className='col col-8'>
+                                <Button
+                                    className='w-100'
+                                    onClick={() => this.createStory()}
+                                >
+                                    Позвать в Сторис
+                                </Button>
+                            </div>
+                        </div>
                     </Div>
                 </div>
                 <div>
@@ -194,7 +233,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
 }
 
 export default compose(
-    connect<IReduxInjectedState, IReduxInjectedDispatch>(
+    kek<IReduxInjectedState, IReduxInjectedDispatch>(
         (state: IReduxState) => ({
             profile: profileActions.getState(state),
         }),

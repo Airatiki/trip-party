@@ -2,6 +2,7 @@ import { VISIBILITY } from 'api/travels/constants';
 import { IGet, IPut } from './types/fetchResult';
 import { IToPut } from './types/instance';
 import connect from '@vkontakte/vk-connect';
+import {APP_ID} from "../../helpers";
 
 
 export default {
@@ -9,7 +10,7 @@ export default {
         try {
             const userData = await connect.sendPromise('VKWebAppGetUserInfo');
             const data = await connect.sendPromise("VKWebAppGetAuthToken",
-                {app_id: 7143877, scope: "friends,status"});
+                {app_id: APP_ID, scope: "friends,status"});
             const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
                 method: 'friends.get',
                 params: {
