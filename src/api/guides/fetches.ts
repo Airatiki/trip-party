@@ -33,7 +33,7 @@ export default {
 
         const newGuides = guides.map((guide: any) => {
             return {
-                id: guide.guide_id,
+                id: guide.guide_id.toString(),
                 name: guide.name,
                 description: guide.description,
                 city: guide.city,

@@ -100,7 +100,17 @@ class CreateGuide extends Component<IProps, IState> {
                 this.setState({searchList: []})
             })
     }
-    
+
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
+        if (prevProps.guides.length < this.props.guides.length) {
+            const guide = this.props.guides.find(
+                (guide) =>
+                    !prevProps.guides.find((prevGuide) => guide.id === prevGuide.id)
+            );
+            this.props.history.push(`/guides/${guide!.id}`);
+        }
+    }
+
     public render() {
         return(
             <Fragment>
@@ -219,6 +229,7 @@ export default compose(
     connect<IReduxInjectedState, IReduxInjectedDispatch>(
         (state: IReduxState) => ({
             profile: profileActions.getState(state),
+            guides: actions.getState(state),
         }),
         (dispatch: Dispatch) => ({
             post: actions.post(dispatch),

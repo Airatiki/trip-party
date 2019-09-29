@@ -92,14 +92,14 @@ export default {
             }
 
             return {
-                id: travel.id,
+                id: travel.id.toString(),
                 guide:  travel.guide,
                 authorId: travel.creator_id,
                 name: travel.name,
                 description: travel.description,
                 visibility: travel.visibility === VISIBILITY.ALL ? VISIBILITY.ALL : VISIBILITY.FRIENDS,
-                startDate: travel.startDate,
-                endDate: travel.finishDate,
+                startDate: new Date(travel.startDate),
+                endDate: new Date(travel.finishDate),
                 showTicketCost: true,
                 noNewPeople: false,
                 chatLink: travel.chat,

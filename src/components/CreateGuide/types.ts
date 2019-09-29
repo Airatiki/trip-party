@@ -1,10 +1,11 @@
 import { IProfile } from "api/profile/types/instance";
-import { IPlace, IToPost } from "api/guides/types/instance";
+import { IGuide, IPlace, IToPost } from "api/guides/types/instance";
 import { TAGS } from "api/guides/constants";
 
 
 export interface IReduxInjectedState {
     profile: IProfile;
+    guides: IGuide[];
 }
 
 export interface IReduxInjectedDispatch {
@@ -14,6 +15,7 @@ export interface IReduxInjectedDispatch {
 export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch {
     history: {
         goBack(): void;
+        push(path: string): void;
     }
 }
 
