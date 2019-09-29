@@ -272,25 +272,25 @@ class Travels extends Component<IProps, IFilterState> {
         }
 
         return(
-            <div className='background-screen'>
+            <div className='background-screen' style={{marginTop: '-45px', marginBottom: '60px'}}>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-2'
+                                onClick={this.props.history.goBack}
+                            />
+                            <Icon24Sort
+                                onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
+                            />
+                        </Div>
+                    }
+                    children={
+                        <div>Путешествия</div>
+                    }
+                />
                 <View activePanel="modals" modal={modal}>
                     <Panel id="modals">
-                        <PanelHeader
-                            left={
-                                <Div className='d-flex flex-row'>
-                                    <Icon24BrowserBack
-                                        className='mr-2'
-                                        onClick={this.props.history.goBack}
-                                    />
-                                    <Icon24Sort
-                                        onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
-                                    />
-                                </Div>
-                            }
-                            children={
-                                <div>Путешествия</div>
-                            }
-                        />
                         <Div>
                             <Tabs theme={this.theme}>
                                 <TabsItem

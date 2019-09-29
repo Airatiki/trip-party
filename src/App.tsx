@@ -62,13 +62,13 @@ class App extends Component {
 
     public render() {
         return (
-            <Root activeView='view' className=''>
-                <View id='view' activePanel='panel'>
-                    <Panel id='panel'>
-                        <Provider store={store}>
-                            <Router history={history}>
+            <Provider store={store}>
+                <Router history={history}>
+                    <Root activeView='view' className=''>
+                        <View id='view' activePanel='panel'>
+                            <Panel id='panel'>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/trips'/>
+                                    <Redirect exact={true} from='/' to='/guides'/>
 
                                     <Route exact={true} path='/create_trip' component={CreateTravel}/>
                                     <Route exact={true} path='/trips' component={Travels}/>
@@ -78,11 +78,11 @@ class App extends Component {
                                     <Route exact={true} path='/guides' component={Guides}/>
                                     <Route exact={true} path='/guides/:id' component={Guide}/>
                                 </Switch>
-                            </Router>
-                        </Provider>
-                    </Panel>
-                </View>
-            </Root>
+                            </Panel>
+                        </View>
+                    </Root>
+                </Router>
+            </Provider>
         );
     }
 }

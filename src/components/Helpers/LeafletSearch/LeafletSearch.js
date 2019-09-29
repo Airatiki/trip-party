@@ -60,6 +60,8 @@ class LeafletSearch extends Component {
                 center={center}
                 zoom="10"
                 ref={this.mapRef}>
+                dragging={this.props.disabled}
+                touchZoom={true}
                 <TileLayer
                     attribution="&amp;copy Google"
                     url={'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'} />

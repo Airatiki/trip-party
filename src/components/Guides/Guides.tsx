@@ -210,34 +210,33 @@ class Travels extends Component<IProps, IFilterState> {
         }
 
         return(
-            <div className='background-screen'>
+            <div style={{marginTop: '-45px', marginBottom: '60px'}}>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-3'
+                                onClick={this.props.history.goBack}
+                            />
+                            <Icon24Sort
+                                className='mr-3'
+                                onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
+                            />
+                            <Icon28AddOutline
+                                style={{marginTop: '-2px'}}
+                                onClick={
+                                    () => this.props.history.push('/create_guide')
+                                }
+                            />
+                        </Div>
+                    }
+                    children={
+                        <div>Гайды</div>
+                    }
+                />
                 <View activePanel="modals" modal={modal}>
                     <Panel id="modals">
-                        <PanelHeader
-                            left={
-                                <Div className='d-flex flex-row'>
-                                    <Icon24BrowserBack
-                                        className='mr-3'
-                                        onClick={this.props.history.goBack}
-                                    />
-                                    <Icon24Sort
-                                        className='mr-3'
-                                        onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
-                                    />
-                                    <Icon28AddOutline
-                                        style={{marginTop: '-2px'}}
-                                        onClick={
-                                            () => this.props.history.push('/create_guide')
-                                        }
-                                    />
-                                </Div>
-                            }
-                            children={
-                                <div>Гайды</div>
-                            }
-                        />
-
-                        <div className='background-screen'>
+                        <div>
                             {
                                 this.props.guides.map((guide) =>
                                     <GuideDemo key={guide.id} guide={guide}/>
@@ -246,7 +245,9 @@ class Travels extends Component<IProps, IFilterState> {
                         </div>
                     </Panel>
                 </View>
-                <Footer/>
+                <div className='mt-4'>
+                    <Footer/>
+                </div>
             </div>
         );
     }

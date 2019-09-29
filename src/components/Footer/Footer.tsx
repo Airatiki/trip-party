@@ -17,19 +17,19 @@ class Footer extends Component<IProps> {
                 tabbar={
                     <Tabbar>
                         <TabbarItem
-                            selected={pathname === '/trips'}
+                            selected={pathname === '/guides'}
                             onClick={
                                 () =>
-                                    pathname !== '/trips' && this.props.history.push('/trips')
+                                    pathname !== '/guides' && this.props.history.push('/guides')
                             }
                         >
                             <Icon28Search/>
                         </TabbarItem>
                         <TabbarItem
-                            selected={pathname === '/guides'}
+                            selected={pathname === '/trips'}
                             onClick={
                                 () =>
-                                    pathname !== '/guides' && this.props.history.push('/guides')
+                                    pathname !== '/trips' && this.props.history.push('/trips')
                             }
                         >
                             <Icon28Newsfeed/>
