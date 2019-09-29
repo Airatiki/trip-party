@@ -20,12 +20,13 @@ export default {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({guide_id: filters.id, city: filters.city, budget: filters.budget, hashtags: tags})
+            body: JSON.stringify({
+                guide_id: Number(filters.id), city: filters.city, budget: filters.budget, hashtags: tags})
         });
 
         response = await response.json();
         const guides = (response as any).result;
-        // console.log(response);
+        console.log('Guides', guides);
         if (guides && !guides.length) {
             return {guides: []}
         }

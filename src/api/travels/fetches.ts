@@ -53,8 +53,8 @@ export default {
             },
             body: JSON.stringify({
                 mine: filters.mine,
-                user_id: userId,
-                trip_id: filters.id,
+                user_id: Number(userId),
+                trip_id: Number(filters.id),
                 city: filters.city,
                 budget: filters.budget,
                 visibility: filters.friends ? 0 : 1,
