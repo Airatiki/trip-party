@@ -63,12 +63,14 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
     }
 
     public createStory() {
+        console.log(this.props.travel.startDate, this.props.travel.endDate);
+
         const fields = [
             {
-                x: 540,
-                y: 1133,
-                value: `${this.props.travel.startDate} - ${this.props.travel.endDate}`,
-                font: "96px Arial",
+                x: 400,
+                y: 500,
+                value: `${formatDate(this.props.travel.startDate)} - ${formatDate(this.props.travel.endDate)}`,
+                font: "60px Arial",
                 align: "center",
                 color: "#FFFFFF"
             }
