@@ -82,3 +82,42 @@ export async function getAvatars(ids: string[]) {
         return null;
     }
 }
+
+interface IData {
+    id: string;
+    image: string;
+    firstName: string;
+    lastName: string;
+}
+
+export async function getParticipantsData(ids: string): Promise<IData[] | null> {
+    try {
+        const data = await connect.sendPromise("VKWebAppGetAuthToken",
+            {app_id: 7143877, scope: "friends,status"});
+
+        // TODO: Load users instead of friends
+        const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
+            method: 'friends.get',
+            params: {
+                count: 50,
+                fields: 'city,domain,photo_100',
+                order: 'random',
+                v: '5.101',
+                access_token: data.access_token
+            },
+        });
+
+        return (items.response as any).items.slice(0, 3).map((friend: any) => ({
+                id: `${friend.id}`,
+                image: friend.photo_100,
+                firstName: friend.first_name,
+                lastName: friend.last_name
+            })
+        );
+    } catch (e) {
+        console.log(e);
+
+        return null;
+    }
+
+}

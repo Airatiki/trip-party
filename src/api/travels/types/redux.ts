@@ -22,7 +22,7 @@ export interface IGetAction {
         mine?: boolean;
     },
     friends: string[],
-    ownerId: string
+    ownerId: string,
 }
 
 export interface IGetSucceedAction {
@@ -53,10 +53,22 @@ export interface IPutSucceedAction {
     error?: object;
 }
 
+export interface ISetUserDataAction {
+    type: ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL,
+    travel: ITravel;
+}
+
+export interface ISetUserDataSucceedAction {
+    type: ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL_SUCCEED;
+    travel: ITravel;
+}
+
 export type IReduxAction =
     IGetAction |
     IGetSucceedAction |
     IPostAction |
     IPostSucceedAction |
     IPutAction |
-    IPutSucceedAction;
+    IPutSucceedAction |
+    ISetUserDataAction |
+    ISetUserDataSucceedAction;

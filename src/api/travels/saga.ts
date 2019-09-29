@@ -5,7 +5,7 @@ import fetches from './fetches';
 import * as NSFetch from './types/fetchResult';
 import * as NSRedux from './types/redux';
 import { IGet, IPost, IPut } from './types/saga';
-import {getAvatars, getDemoParticipantIds} from "../../helpers";
+import {getAvatars, getDemoParticipantIds, getParticipantsData} from "../../helpers";
 
 
 export default {
@@ -14,13 +14,12 @@ export default {
             const {travels, error}: NSFetch.IGet = yield call(fetches.get, action.filters, action.ownerId);
             const newTravels = [];
 
-            if (!!travels) {
+            if (travels) {
                 for (const travel of travels) {
                     const getIds = getDemoParticipantIds(travel.participants, action.friends, action.ownerId);
                     const result = yield call(getAvatars, getIds);
 
                     newTravels.push({...travel, demoParticipants: result});
-                    console.log(getIds);
                 }
             }
 
@@ -76,6 +75,61 @@ export default {
 
         function* taker() {
             yield takeLatest(ACTIONS_TYPES.PUT_TRAVEL, caller);
+        }
+
+        // @ts-ignore
+        return {caller, taker};
+    },
+
+    setUserData() {
+        interface IData {
+            id: string;
+            image: string;
+            firstName: string;
+            lastName: string;
+        }
+
+        function* caller(action: NSRedux.ISetUserDataAction) {
+            const {travel} = action;
+            const participantsIds = travel.participants.map((user) => user.id);
+            // @ts-ignore
+            const participantsData: IData[] = yield call(getParticipantsData, participantsIds);
+            const newParticipantsIds = travel.newParticipants.map((user) => user.id);
+            // @ts-ignore
+            const newParticipantsData: IData[] = yield call(getParticipantsData, newParticipantsIds);
+
+            const newTravel = {
+                ...travel,
+                participants: travel.participants.map((user) => {
+                    const data = participantsData.find(
+                        (elem) => elem.id === user.id
+                    );
+                    return {
+                        ...user,
+                        ...data,
+                    }
+                }),
+                newParticipants: travel.newParticipants.map((user) => {
+                    const data = participantsData.find(
+                        (elem) => elem.id === user.id
+                    );
+                    return {
+                        ...user,
+                        ...data,
+                    }
+                }),
+            };
+
+            const success: NSRedux.ISetUserDataSucceedAction = {
+                type: ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL_SUCCEED,
+                travel: newTravel,
+            };
+
+            yield put(success);
+        }
+
+        function* taker() {
+            yield takeLatest(ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL, caller);
         }
 
         // @ts-ignore

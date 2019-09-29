@@ -1,6 +1,6 @@
 import { IReduxAction } from '../types';
 import { ACTIONS_TYPES } from './constants';
-import { IState, IGetSucceedAction, IPostSucceedAction, IPutSucceedAction } from './types/redux';
+import { IState, IGetSucceedAction, IPostSucceedAction, IPutSucceedAction, ISetUserDataSucceedAction } from './types/redux';
 import { ACTIONS_TYPES as PARTICIPANTS_ACTIONS_TYPES } from '../participants/constants';
 import * as NSParticipantsRedux from '../participants/types/redux';
 import { postParticipant, postNewParticipant, removeNewParticipant, removeParticipant } from './functions';
@@ -131,7 +131,16 @@ export default function(state: IState = initState, action: IReduxAction) {
                     isLoaded: true,
                 }
         }
-
+        case ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL_SUCCEED: {
+            const {travel} = <ISetUserDataSucceedAction>action;
+            return {
+                ...state,
+                data: [
+                    travel,
+                    ...state.data.filter((elem) => elem.id === travel.id),
+                ]
+            };
+        }
         default: {
             return state;
         }

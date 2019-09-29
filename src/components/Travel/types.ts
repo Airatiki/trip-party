@@ -11,6 +11,7 @@ export interface IReduxInjectedState {
 export interface IReduxInjectedDispatch {
     get(filters: NSRedux.IGetAction['filters'], friends: string[], ownerId: string): void;
     put(travel: IToPut): void;
+    setUsersData(travel: ITravel): void;
 }
 
 export interface IOwnProps {
@@ -24,6 +25,7 @@ export interface IOwnProps {
 export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch, IOwnProps {
     history: {
         push(path: string): void;
+        goBack(): void;
     }
 }
 

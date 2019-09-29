@@ -9,7 +9,7 @@ export default {
         try {
             const userData = await connect.sendPromise('VKWebAppGetUserInfo');
             const data = await connect.sendPromise("VKWebAppGetAuthToken",
-                {app_id: 7150219, scope: "friends,status"});
+                {app_id: 7143877, scope: "friends,status"});
             const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
                 method: 'friends.get',
                 params: {
