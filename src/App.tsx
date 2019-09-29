@@ -68,7 +68,7 @@ class App extends Component {
                         <Provider store={store}>
                             <Router history={history}>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/trips'/>
+                                    <Redirect exact={true} from='/' to='/guides'/>
 
                                     <Route exact={true} path='/create_trip' component={CreateTravel}/>
                                     <Route exact={true} path='/trips' component={Travels}/>

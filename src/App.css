@@ -1,5 +1,10 @@
 :root {
-    /*--background_content: linear-gradient(216deg, #662D8C 20%, #ED1E79 73%);*/
+    --background_content: linear-gradient(216deg, #662D8C 20%, #ED1E79 73%);
+    /*--background_page: linear-gradient(216deg, #662D8C 20%, #ED1E79 73%);*/
+    --background_page:  #662D8C;
+    --header_background: #ED1E79;
+    --input_background: #ED1E79;
+
 }
 
 .App {
