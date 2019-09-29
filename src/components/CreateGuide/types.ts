@@ -17,7 +17,6 @@ export interface IState {
     name: string;
     description: string;
     city: string;
-    authorId: string;
     likes: number;
     budget: string;
     places: IPlace[];

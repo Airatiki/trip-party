@@ -30,7 +30,6 @@ class CreateGuide extends Component<IProps, IState> {
             name: '',
             description: '',
             city: '',
-            authorId: this.props.profile.VkId,
             likes: 0,
             budget: '',
             places: [],
@@ -41,6 +40,7 @@ class CreateGuide extends Component<IProps, IState> {
     public onSave = () => {
         this.props.post({
             ...this.state,
+            authorId: this.props.profile.VkId,
         });
     };
 

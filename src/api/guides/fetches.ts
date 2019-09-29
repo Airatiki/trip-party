@@ -58,6 +58,7 @@ export default {
     },
 
     async post(guide: IToPost): Promise<IPost> {
+        console.log(guide)
         let request = await fetch(`${API_URL}/guide/create`, {
             method: 'POST',
             headers: {
@@ -71,7 +72,7 @@ export default {
                 city: guide.city,
                 budget: guide.budget,
                 likes: guide.likes,
-                hashtags: guide.tags.map((tag) => ({id: '1', name: tag})),
+                hashtags: guide.tags.map((tag) => ({name: tag})),
                 locations: guide.places.map((place) => {
                     return {
                         name: place.name,

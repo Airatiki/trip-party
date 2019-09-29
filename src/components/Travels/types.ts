@@ -8,5 +8,8 @@ export interface IProps {
     profile: IProfile;
     error: object | null;
     isLoaded: boolean;
+    history: {
+        goBack(): void;
+    };
     get(filters: NSRedux.IGetAction['filters'], friends: string[], ownerId: string): void;
 }

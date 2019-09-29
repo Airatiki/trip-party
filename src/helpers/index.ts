@@ -56,7 +56,7 @@ export function getDemoParticipantIds(participants: IParticipant[], friends: str
 export async function getAvatars(ids: string[]) {
     try {
         const data = await connect.sendPromise("VKWebAppGetAuthToken",
-            {app_id: 7150219, scope: "friends,status"});
+            {app_id: 7143877, scope: "friends,status"});
 
         // TODO: Load users instead of friends
         const items = await connect.sendPromise('VKWebAppCallAPIMethod', {

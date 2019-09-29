@@ -17,8 +17,8 @@ import '@vkontakte/vkui/dist/vkui.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-// import CreateTravel from 'components/CreateTravel';
-// import Travels from 'components/Travels';
+import CreateTravel from 'components/CreateTravel';
+import Travels from 'components/Travels';
 import Travel from 'components/Travel';
 import CreateGuide from 'components/CreateGuide';
 import Guides from 'components/Guides';
@@ -71,8 +71,8 @@ class App extends Component {
                                 <Switch>
                                     <Redirect exact={true} from='/' to='/create_guide'/>
 
-                                    {/*<Route exact={true} path='/create_trip' component={CreateTravel}/>*/}
-                                    {/*<Route exact={true} path='/trips' component={Travels}/>*/}
+                                    <Route exact={true} path='/create_trip' component={CreateTravel}/>
+                                    <Route exact={true} path='/trips' component={Travels}/>
                                     <Route exact={true} path='/trips/:id' component={Travel}/>
 
                                     <Route exact={true} path='/create_guide' component={CreateGuide}/>

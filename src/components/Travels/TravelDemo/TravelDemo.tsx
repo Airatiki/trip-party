@@ -1,25 +1,30 @@
+import {IProps} from "./types";
+
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import {Cell, Div, Group, Avatar} from "@vkontakte/vkui";
 
 import './TravelDemo.css';
-import {Cell, Div, Group} from "@vkontakte/vkui";
-import {IProps} from "./types";
 
 
 class TravelDemo extends Component<IProps> {
+    public goTo = () => {
+        this.props.history.push(`/trips/${this.props.travel.id}`);
+    };
 
     public render() {
         return(
-            <Group className='container'>
+            <Group className='travel-demo-container' onClick={this.goTo}>
                 <Div>
                     <div className='title'>Поездка  на  Burning Man</div>
                     <div className='description'>Собираем компанию в лагерь на бернинг! Примерный бюджет поездки по 2500$ c человека</div>
                     <div className='participants-header'>Участники:</div>
                     <div className='participants-container'>
-                        {/*    if (!!this.props.travel.demoParticipants) {*/}
-                        {/*    this.props.travel.demoParticipants!.map((avatar) => {*/}
-                        {/*    return <Avatar key={avatar} size={44} src={avatar!}/>*/}
-                        {/*})*/}
-                        {/*    }*/}
+                        {
+                            (this.props.travel.demoParticipants || []).map((avatar) => {
+                                return <Avatar key={avatar} size={44} src={avatar!}/>
+                            })
+                        }
 
 
                         <Cell
@@ -37,4 +42,4 @@ class TravelDemo extends Component<IProps> {
     }
 }
 
-export default TravelDemo;
+export default withRouter(TravelDemo);

@@ -11,7 +11,7 @@ import {getAvatars, getDemoParticipantIds} from "../../helpers";
 export default {
     get(): IGet {
         function* caller(action: NSRedux.IGetAction) {
-            const {travels, error}: NSFetch.IGet = yield call(fetches.get, action.filters);
+            const {travels, error}: NSFetch.IGet = yield call(fetches.get, action.filters, action.ownerId);
             const newTravels = [];
 
             if (!!travels) {
@@ -63,6 +63,7 @@ export default {
 
     put(): IPut {
         function* caller(action: NSRedux.IPutAction) {
+            // @ts-ignore
             const {travel, error}: NSFetch.IPut = yield call(fetches.put, action.travel);
             const success: NSRedux.IPutSucceedAction = {
                 type: ACTIONS_TYPES.PUT_TRAVEL_SUCCEED,
