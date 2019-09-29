@@ -149,14 +149,6 @@ class Form extends Component<IProps, IState> {
                             </Radio>
                             <Radio
                                 name='visibility'
-                                value={VISIBILITY.FRIENDS_FRIENDS}
-                                checked={this.state.visibility === VISIBILITY.FRIENDS_FRIENDS}
-                                onChange={this.onChangeVisibility}
-                            >
-                                Друзьям и друзьям друзей участников
-                            </Radio>
-                            <Radio
-                                name='visibility'
                                 value={VISIBILITY.ALL}
                                 checked={this.state.visibility === VISIBILITY.ALL}
                                 onChange={this.onChangeVisibility}

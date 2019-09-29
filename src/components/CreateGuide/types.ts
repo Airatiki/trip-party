@@ -11,7 +11,11 @@ export interface IReduxInjectedDispatch {
     post(guide: IToPost): void;
 }
 
-export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch {}
+export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch {
+    history: {
+        goBack(): void;
+    }
+}
 
 export interface IState {
     name: string;

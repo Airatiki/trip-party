@@ -1,4 +1,4 @@
-import { IToPost } from 'api/travels/types/instance';
+import { IToPost, ITravel } from 'api/travels/types/instance';
 import { VISIBILITY } from 'api/travels/constants';
 import { IProfile } from "api/profile/types/instance";
 import { IGuide } from "api/guides/types/instance";
@@ -7,6 +7,7 @@ import { IGuide } from "api/guides/types/instance";
 export interface IReduxInjectedState {
     profile: IProfile;
     guides: IGuide[];
+    travels: ITravel[];
 }
 
 export interface IReduxInjectedDispatch {
@@ -21,6 +22,7 @@ export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch {
     };
     history: {
         push(path: string): void;
+        goBack(): void;
     };
 }
 

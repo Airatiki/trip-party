@@ -92,26 +92,26 @@ export default {
             const {travel} = action;
             const participantsIds = travel.participants.map((user) => user.id);
             // @ts-ignore
-            const participantsData: IData[] = yield call(getParticipantsData, participantsIds);
+            const participantsData: IData[] | null = yield call(getParticipantsData, participantsIds);
             const newParticipantsIds = travel.newParticipants.map((user) => user.id);
             // @ts-ignore
-            const newParticipantsData: IData[] = yield call(getParticipantsData, newParticipantsIds);
+            const newParticipantsData: IData[] | null = yield call(getParticipantsData, newParticipantsIds);
 
             const newTravel = {
                 ...travel,
                 participants: travel.participants.map((user) => {
-                    const data = participantsData.find(
+                    const data = participantsData ? participantsData.find(
                         (elem) => elem.id === user.id
-                    );
+                    ) : {};
                     return {
                         ...user,
                         ...data,
                     }
                 }),
                 newParticipants: travel.newParticipants.map((user) => {
-                    const data = participantsData.find(
+                    const data = newParticipantsData ? newParticipantsData.find(
                         (elem) => elem.id === user.id
-                    );
+                    ) : {};
                     return {
                         ...user,
                         ...data,

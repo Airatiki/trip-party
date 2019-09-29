@@ -4,6 +4,7 @@
     "tslint-react"
   ],
   "rules": {
+    "jsx-curly-spacing": false,
     "no-empty": false,
     "no-unused-expression": false,
     "no-empty-interface": false,

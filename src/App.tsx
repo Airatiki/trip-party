@@ -23,7 +23,6 @@ import Travel from 'components/Travel';
 import CreateGuide from 'components/CreateGuide';
 import Guides from 'components/Guides';
 import Guide from 'components/Guide';
-import Settings from 'components/Settings';
 
 import * as profileActions from 'api/profile/actions';
 
@@ -69,7 +68,7 @@ class App extends Component {
                         <Provider store={store}>
                             <Router history={history}>
                                 <Switch>
-                                    <Redirect exact={true} from='/' to='/create_guide'/>
+                                    <Redirect exact={true} from='/' to='/trips'/>
 
                                     <Route exact={true} path='/create_trip' component={CreateTravel}/>
                                     <Route exact={true} path='/trips' component={Travels}/>
@@ -77,9 +76,7 @@ class App extends Component {
 
                                     <Route exact={true} path='/create_guide' component={CreateGuide}/>
                                     <Route exact={true} path='/guides' component={Guides}/>
-                                    <Route exact={true} path='/guide/:id' component={Guide}/>
-
-                                    <Route exact={true} path='/settings' component={Settings}/>
+                                    <Route exact={true} path='/guides/:id' component={Guide}/>
                                 </Switch>
                             </Router>
                         </Provider>

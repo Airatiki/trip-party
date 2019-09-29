@@ -5,9 +5,10 @@ import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose, Dispatch } from 'redux';
-import { Button, Div, ScreenSpinner, Group, List, Cell } from "@vkontakte/vkui";
+import { Button, Div, ScreenSpinner, Group, List, Cell, PanelHeader } from "@vkontakte/vkui";
 import Icon36LikeOutline from '@vkontakte/icons/dist/36/like_outline';
 import Icon36Like from '@vkontakte/icons/dist/36/like';
+import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 
 import * as actions from 'api/guides/actions';
 import * as profileAction from 'api/profile/actions';
@@ -60,6 +61,19 @@ class Guide extends Component<IProps> {
 
         return(
             <Fragment>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-3'
+                                onClick={this.props.history.goBack}
+                            />
+                        </Div>
+                    }
+                    children={
+                        <div>Гайд</div>
+                    }
+                />
                 <Group>
                     <List>
                         <Cell>
