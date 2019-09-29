@@ -3,7 +3,6 @@ import { ACTIONS_TYPES } from './constants';
 import { IParticipant, IToPost, IToPostNew } from './types/instance';
 import * as NSRedux from './types/redux';
 
-
 export function postNew(dispatch: Dispatch) {
     return function(participant: IToPostNew): void {
         const action: NSRedux.IPostNewAction = {
@@ -15,30 +14,33 @@ export function postNew(dispatch: Dispatch) {
 }
 
 export function post(dispatch: Dispatch) {
-    return function(participant: IToPost): void {
+    return function(participant: IToPost, orgId: string): void {
         const action: NSRedux.IPostAction = {
             type: ACTIONS_TYPES.POST_PARTICIPANT,
             participant,
+            orgId
         };
         dispatch(action);
     };
 }
 
 export function removeNew(dispatch: Dispatch) {
-    return function(participant: IParticipant): void {
+    return function(participant: IParticipant, orgId: string): void {
         const action: NSRedux.IRemoveNewAction = {
             type: ACTIONS_TYPES.REMOVE_NEW_PARTICIPANT,
             participant,
+            orgId
         };
         dispatch(action);
     };
 }
 
 export function remove(dispatch: Dispatch) {
-    return function(participant: IParticipant): void {
+    return function(participant: IParticipant, orgId: string): void {
         const action: NSRedux.IRemoveAction = {
             type: ACTIONS_TYPES.REMOVE_PARTICIPANT,
             participant,
+            orgId
         };
         dispatch(action);
     };

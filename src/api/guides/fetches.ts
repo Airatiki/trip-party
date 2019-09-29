@@ -58,7 +58,6 @@ export default {
     },
 
     async post(guide: IToPost): Promise<IPost> {
-        console.log(guide)
         let request = await fetch(`${API_URL}/guide/create`, {
             method: 'POST',
             headers: {
@@ -98,8 +97,13 @@ export default {
     },
 
     async postLike(data: IToPostLike): Promise<IPostLike> {
+        await fetch(`${API_URL}/guide/like?guide_id=${data.id}&like=${data.isLiked}`);
+
         return {
-            data,
+            data: {
+                ...data,
+                isLiked: !data.isLiked
+            }
         }
     },
 }

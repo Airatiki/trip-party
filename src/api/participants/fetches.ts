@@ -1,22 +1,26 @@
 import { IPost, IPostNew, IRemove, IRemoveNew } from './types/fetchResult';
 import { IParticipant, IToPost, IToPostNew } from './types/instance';
+import {API_URL} from "../../helpers";
 
 
 export default {
     async postNew(participant: IToPostNew): Promise<IPostNew> {
+        await fetch(`${API_URL}/trip/apply?trip_id=${participant.occasionId}&user_id=${participant.VkId}`);
+
         return {
             participant: {
                 ...participant,
-
-                id: 'kek2345343',
-                firstName: 'Eric',
-                lastName: 'Wolf',
-                image: 'https://iknowyourmeme.files.wordpress.com/2016/04/14280761127830.jpg?w=616',
+                id: '',
+                firstName: '',
+                lastName: '',
+                image: '',
             }
         }
     },
 
-    async post(participant: IToPost): Promise<IPost> {
+    async post(participant: IToPost, orgId: string): Promise<IPost> {
+        await fetch(`${API_URL}/trip/respond?orgId=${orgId}&response=1&participant_id=${participant.id}`);
+
         return {
             participant: {
                 ...participant,
@@ -24,7 +28,9 @@ export default {
         };
     },
 
-    async removeNew(participant: IParticipant): Promise<IRemoveNew> {
+    async removeNew(participant: IParticipant, orgId: string): Promise<IRemoveNew> {
+        await fetch(`${API_URL}/trip/respond?orgId=${orgId}&response=0&participant_id=${participant.id}`);
+
         return {
             participant: {
                 ...participant,
@@ -32,7 +38,9 @@ export default {
         }
     },
 
-    async remove(participant: IParticipant): Promise<IRemove> {
+    async remove(participant: IParticipant, orgId: string): Promise<IRemove> {
+        await fetch(`${API_URL}/trip/respond?orgId=${orgId}&response=0&participant_id=${participant.id}`);
+
         return {
             participant: {
                 ...participant,

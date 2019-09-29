@@ -16,6 +16,7 @@ export interface IPostNewSucceedAction {
 export interface IPostAction {
     type: ACTIONS_TYPES.POST_PARTICIPANT,
     participant: IToPost,
+    orgId: string;
 }
 
 export interface IPostSucceedAction {
@@ -27,6 +28,7 @@ export interface IPostSucceedAction {
 export interface IRemoveNewAction {
     type: ACTIONS_TYPES.REMOVE_NEW_PARTICIPANT,
     participant: IParticipant;
+    orgId: string;
 }
 
 export interface IRemoveNewSucceedAction {
@@ -38,6 +40,7 @@ export interface IRemoveNewSucceedAction {
 export interface IRemoveAction {
     type: ACTIONS_TYPES.REMOVE_PARTICIPANT,
     participant: IParticipant;
+    orgId: string;
 }
 
 export interface IRemoveSucceedAction {

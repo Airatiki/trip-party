@@ -8,6 +8,9 @@ import { compose, Dispatch } from 'redux';
 import Icon24Delete from '@vkontakte/icons/dist/24/delete';
 
 import * as action from 'api/participants/actions';
+import {IReduxState} from "../../../../api/types";
+import * as profileActions from "../../../../api/profile/actions";
+import {IReduxInjectedState} from "../../NewParticipant/types";
 
 
 class Form extends Component<IProps, IState> {
@@ -28,7 +31,7 @@ class Form extends Component<IProps, IState> {
                     }
                     <Icon24Delete
                         onClick={
-                            () => this.props.remove(participant)
+                            () => this.props.remove(participant, this.props.profile.VkId)
                         }
                     />
                 </div>
@@ -38,8 +41,10 @@ class Form extends Component<IProps, IState> {
 }
 
 export default compose(
-    connect<null, IReduxInjectedDispatch>(
-        null,
+    connect<IReduxInjectedState, IReduxInjectedDispatch>(
+        (state: IReduxState) => ({
+            profile: profileActions.getState(state)
+        }),
         (dispatch: Dispatch) => ({
             remove: action.remove(dispatch),
         }),

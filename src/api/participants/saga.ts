@@ -30,7 +30,7 @@ export default {
 
     post(): IPost {
         function* caller(action: NSRedux.IPostAction) {
-            const {participant, error}: NSFetch.IPost = yield call(fetches.post, action.participant);
+            const {participant, error}: NSFetch.IPost = yield call(fetches.post, action.participant, action.orgId);
             const success: NSRedux.IPostSucceedAction = {
                 type: ACTIONS_TYPES.POST_PARTICIPANT_SUCCEED,
                 error,
@@ -50,7 +50,11 @@ export default {
 
     removeNew(): IRemoveNew {
         function* caller(action: NSRedux.IRemoveNewAction) {
-            const {participant, error}: NSFetch.IRemoveNew = yield call(fetches.removeNew, action.participant);
+            const {participant, error}: NSFetch.IRemoveNew = yield call(
+                fetches.removeNew,
+                action.participant,
+                action.orgId
+            );
             const success: NSRedux.IRemoveNewSucceedAction = {
                 type: ACTIONS_TYPES.REMOVE_NEW_PARTICIPANT_SUCCEED,
                 error,
@@ -70,7 +74,7 @@ export default {
 
     remove(): IRemove {
         function* caller(action: NSRedux.IRemoveAction) {
-            const {participant, error}: NSFetch.IRemove = yield call(fetches.remove, action.participant);
+            const {participant, error}: NSFetch.IRemove = yield call(fetches.remove, action.participant, action.orgId);
             const success: NSRedux.IRemoveSucceedAction = {
                 type: ACTIONS_TYPES.REMOVE_PARTICIPANT_SUCCEED,
                 error,

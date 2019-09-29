@@ -1,4 +1,4 @@
-import { IProps, IReduxInjectedDispatch } from './types';
+import { IProps, IReduxInjectedState, IReduxInjectedDispatch } from './types';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -6,6 +6,8 @@ import { compose, Dispatch } from 'redux';
 import { Cell, Button, Avatar } from '@vkontakte/vkui';
 
 import * as actions from 'api/participants/actions';
+import {IReduxState} from "../../../api/types";
+import * as profileActions from "../../../api/profile/actions";
 
 
 class NewParticipant extends Component<IProps> {
@@ -18,12 +20,12 @@ class NewParticipant extends Component<IProps> {
                     <div>
                         <Button
                             className='mr-2'
-                            onClick={() => this.props.accept(participant)}
+                            onClick={() => this.props.accept(participant, this.props.profile.VkId)}
                         >
                             Принять
                         </Button>
                         <Button
-                            onClick={() => this.props.reject(participant)}
+                            onClick={() => this.props.reject(participant, this.props.profile.VkId)}
                         >
                             Отклонить
                         </Button>
@@ -39,8 +41,10 @@ class NewParticipant extends Component<IProps> {
 }
 
 export default compose(
-    connect<null, IReduxInjectedDispatch>(
-        null,
+    connect<IReduxInjectedState, IReduxInjectedDispatch>(
+        (state: IReduxState) => ({
+            profile: profileActions.getState(state)
+        }),
         (dispatch: Dispatch) => ({
             accept: actions.post(dispatch),
             reject: actions.removeNew(dispatch),
