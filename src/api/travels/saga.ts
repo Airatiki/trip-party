@@ -48,7 +48,6 @@ export default {
                 error,
                 travel,
             };
-
             yield put(success);
         }
 

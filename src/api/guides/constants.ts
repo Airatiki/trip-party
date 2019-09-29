@@ -10,7 +10,7 @@ export enum ACTIONS_TYPES {
 }
 
 export enum TAGS {
-    GAAAAY = 'GAAAAY',
-    KEKENOID = 'KEKENOID',
-    HELISEXUAL = 'HELISEXUAL',
+    FISHING = 'Рыбалка',
+    MEETING = 'Митинг',
+    BAR = 'Бар',
 }

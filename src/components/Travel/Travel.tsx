@@ -14,6 +14,7 @@ import * as profileActions from 'api/profile/actions';
 
 import Display from './Display';
 import Form from './Form';
+import Footer from "../Footer/Footer";
 
 
 class Travel extends Component<IProps, IState> {
@@ -90,6 +91,9 @@ class Travel extends Component<IProps, IState> {
                             />
                         )
                 }
+                <div className='mt-4'>
+                    <Footer/>
+                </div>
             </Div>
         )
     }

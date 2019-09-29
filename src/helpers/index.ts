@@ -70,7 +70,8 @@ export async function getAvatars(ids: string[]) {
             },
         });
 
-        return (items.response as any).items.slice(0, 3).map((friend: any) => friend.photo_100);
+        const max = Math.min(...(items.response as any).items.length, 3);
+        return (items.response as any).items.slice(0, max).map((friend: any) => friend.photo_100);
     } catch (e) {
         console.log(e);
 

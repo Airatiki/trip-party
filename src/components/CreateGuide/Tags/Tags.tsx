@@ -34,7 +34,9 @@ class Tags extends Component<IProps> {
                                 defaultChecked={this.props.addedTags.indexOf(tag) !== -1}
                                 onChange={() => this.onChange(tag)}
                             >
-                                {tag}
+                                <span className='text-white'>
+                                    {TAGS[tag]}
+                                </span>
                             </Checkbox>
                     )
                 }

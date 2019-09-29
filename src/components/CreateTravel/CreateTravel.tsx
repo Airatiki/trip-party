@@ -23,6 +23,7 @@ import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 import * as travelsActions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
 import * as guidesActions from 'api/guides/actions';
+import Footer from "../Footer/Footer";
 
 
 class CreateTravel extends Component<IProps, IState> {
@@ -48,8 +49,6 @@ class CreateTravel extends Component<IProps, IState> {
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
         if (prevProps.travels.length < this.props.travels.length) {
-            console.log(prevProps.travels);
-            console.log(this.props.travels);
             const travel = this.props.travels.find(
                 (travel) =>
                     !prevProps.travels.find((prevTravel) => travel.id === prevTravel.id)
@@ -174,6 +173,9 @@ class CreateTravel extends Component<IProps, IState> {
                         Сохранить
                     </Button>
                 </FormLayout>
+                <div className='mb-5'>
+                    <Footer/>
+                </div>
             </Fragment>
         );
     }

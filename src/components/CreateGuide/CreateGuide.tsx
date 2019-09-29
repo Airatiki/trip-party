@@ -26,6 +26,7 @@ import Tags from './Tags';
 import Place from "./Place";
 import { IPlace } from "../../api/guides/types/instance";
 import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
+import Footer from "../Footer/Footer";
 
 
 class CreateGuide extends Component<IProps, IState> {
@@ -220,6 +221,9 @@ class CreateGuide extends Component<IProps, IState> {
                         Сохранить
                     </Button>
                 </FormLayout>
+                <div className='mb-5'>
+                    <Footer/>
+                </div>
             </Fragment>
         );
     }
