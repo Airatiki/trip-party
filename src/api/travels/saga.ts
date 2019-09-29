@@ -101,7 +101,7 @@ export default {
                 ...travel,
                 participants: travel.participants.map((user) => {
                     const data = participantsData ? participantsData.find(
-                        (elem) => elem.id === user.id
+                        (elem) => elem.id.toString() === user.id.toString()
                     ) : {};
                     return {
                         ...user,
@@ -110,7 +110,7 @@ export default {
                 }),
                 newParticipants: travel.newParticipants.map((user) => {
                     const data = newParticipantsData ? newParticipantsData.find(
-                        (elem) => elem.id === user.id
+                        (elem) => elem.id.toString() === user.id.toString()
                     ) : {};
                     return {
                         ...user,
@@ -118,7 +118,6 @@ export default {
                     }
                 }),
             };
-
             const success: NSRedux.ISetUserDataSucceedAction = {
                 type: ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL_SUCCEED,
                 travel: newTravel,

@@ -70,7 +70,7 @@ export async function getAvatars(ids: string[]) {
             },
         });
 
-        const max = Math.min(...(items.response as any).items.length, 3);
+        const max = Math.min(ids.length, 3);
         return (items.response as any).items.slice(0, max).map((friend: any) => friend.photo_100);
     } catch (e) {
         console.log(e);
@@ -93,8 +93,9 @@ export async function getParticipantsData(ids: string): Promise<IData[] | null> 
 
         // TODO: Load users instead of friends
         const items = await connect.sendPromise('VKWebAppCallAPIMethod', {
-            method: 'friends.get',
+            method: 'users.get',
             params: {
+                users_ids: ids,
                 count: 50,
                 fields: 'city,domain,photo_100',
                 order: 'random',
@@ -102,8 +103,8 @@ export async function getParticipantsData(ids: string): Promise<IData[] | null> 
                 access_token: data.access_token
             },
         });
-
-        return (items.response as any).map((friend: any) => ({
+        return (items.response as any)
+            .map((friend: any) => ({
                 id: `${friend.id}`,
                 image: friend.photo_100,
                 firstName: friend.first_name,

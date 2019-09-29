@@ -71,7 +71,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                 <div>
                     <div>
                         <div className='d-flex flex-row justify-content-between align-items-center'>
-                            <label style={{marginTop: '5px', fontSize: '20px'}}>
+                            <label style={{marginTop: '5px', fontSize: '20px'}} className='text-white'>
                                 {travel.name}
                             </label>
                             {
@@ -97,12 +97,12 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                             }
                         </div>
                     </div>
-                    <div>
+                    <div className='text-white'>
                         {travel.description}
                     </div>
                     <Div>
                         <div className='row'>
-                            <label className='col-form-label col col-4'>
+                            <label className='col-form-label col col-4 text-white'>
                                 Даты:
                             </label>
                             <div className='col col-8'>
@@ -114,7 +114,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                         {
                             travel.showTicketCost &&
                             <div className='row'>
-                                <label className='col-form-label col col-4'>
+                                <label className='col-form-label col col-4 text-white'>
                                     Билеты:
                                 </label>
                                 <div className='col col-8'>
@@ -132,7 +132,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                         {
                             travel.chatLink &&
                             <div className='row'>
-                                <label className='col-form-label col col-4'>
+                                <label className='col-form-label col col-4 text-white'>
                                     Чат:
                                 </label>
                                 <div className='col col-8'>
@@ -153,7 +153,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                         <div>
                             {
                                 !!travel.newParticipants.length &&
-                                <div style={{fontSize: '12px'}}>
+                                <div style={{fontSize: '12px'}} className='text-white'>
                                     Новые заявки на участие:
                                 </div>
                             }
@@ -169,7 +169,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                     }
                 </div>
                 <div>
-                    <div style={{fontSize: '12px'}}>
+                    <div style={{fontSize: '12px'}} className='text-white'>
                         Участники:
                     </div>
                     {
@@ -185,7 +185,7 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                     }
                     {
                         !travel.participants.length &&
-                        <div>Никого нет</div>
+                        <div className='text-white'>Никого нет</div>
                     }
                 </div>
             </Fragment>
