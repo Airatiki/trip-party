@@ -1,10 +1,22 @@
 import { IProps, IReduxInjectedState, IReduxInjectedDispatch, IState } from "./types";
 import { IReduxState } from "api/types";
 
-import React, { Component, FormEvent } from 'react';
+import React, { Component, FormEvent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { Button, FormLayout, FormLayoutGroup, Input, Textarea, Div, Group, List, Cell, Search } from "@vkontakte/vkui";
+import {
+    Button,
+    FormLayout,
+    FormLayoutGroup,
+    Input,
+    Textarea,
+    Div,
+    Group,
+    List,
+    Cell,
+    Search,
+    PanelHeader
+} from "@vkontakte/vkui";
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 
 import * as actions from 'api/guides/actions';
@@ -13,6 +25,7 @@ import * as profileActions from 'api/profile/actions';
 import Tags from './Tags';
 import Place from "./Place";
 import { IPlace } from "../../api/guides/types/instance";
+import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 
 
 class CreateGuide extends Component<IProps, IState> {
@@ -90,99 +103,114 @@ class CreateGuide extends Component<IProps, IState> {
     
     public render() {
         return(
-            <FormLayout>
-                <FormLayoutGroup top='Название'>
-                    <Input
-                        defaultValue={this.state.name}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({name: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Описание'>
-                    <Textarea
-                        value={this.state.description}
-                        onChange={
-                            (event: FormEvent<HTMLTextAreaElement>) =>
-                                this.setState({description: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Бюджет'>
-                    <Input
-                        defaultValue={this.state.budget}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({budget: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top="Город">
-                    <Search
-                        value={this.state.city}
-                        onChange={(e: any) => {
-                            this.setState({ city: e.replace(/\s+/g, ' ') });
-                            this.maps();
-                        }}
-                    />
-                    {
-                        !!this.state.searchList.length &&
-                        <Group title={`Список мест по запросу "${this.state.city}"`}>
-                            <List>
-                                {
-                                    this.state.searchList.map((list: any, index) => {
-                                            return (
-                                                <Cell
-                                                    key={index}
-                                                    multiline={true}
-                                                    description={`${list.country_name}`}
-                                                    onClick={(value) => {
-                                                        this.setState({city: list.name, searchList: []})
-                                                    }}
-                                                >
-                                                    {`${list.name}`}
-                                                </Cell>
-                                            );
-                                        }
-                                    )
-                                }
-                            </List>
-                        </Group>
+            <Fragment>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-3'
+                                onClick={this.props.history.goBack}
+                            />
+                        </Div>
                     }
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Тэги'>
-                    <Tags
-                        addedTags={this.state.tags}
-                        onChange={
-                            (tags) =>
-                                this.setState({tags})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Места'>
-                    {
-                        this.state.places.map(
-                            (place, i) =>
-                                <Place
-                                    key={i}
-                                    index={i}
-                                    onSave={this.onSavePlace}
-                                    onRemove={this.onRemovePlace}
-                                    {...place}
-                                />
-                        )
+                    children={
+                        <div>Новый гайд</div>
                     }
-                    <Div className='d-flex flex-row justify-content-end'>
-                        <Icon28AddOutline
-                            onClick={this.onAddNewPlace}
+                />
+                <FormLayout>
+                    <FormLayoutGroup top='Название'>
+                        <Input
+                            defaultValue={this.state.name}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({name: event.currentTarget.value})
+                            }
                         />
-                    </Div>
-                </FormLayoutGroup>
-                <Button size='xl' onClick={this.onSave}>
-                    Сохранить
-                </Button>
-            </FormLayout>
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Описание'>
+                        <Textarea
+                            value={this.state.description}
+                            onChange={
+                                (event: FormEvent<HTMLTextAreaElement>) =>
+                                    this.setState({description: event.currentTarget.value})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Бюджет'>
+                        <Input
+                            defaultValue={this.state.budget}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({budget: event.currentTarget.value})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top="Город">
+                        <Search
+                            value={this.state.city}
+                            onChange={(e: any) => {
+                                this.setState({ city: e.replace(/\s+/g, ' ') });
+                                this.maps();
+                            }}
+                        />
+                        {
+                            !!this.state.searchList.length &&
+                            <Group title={`Список мест по запросу "${this.state.city}"`}>
+                                <List>
+                                    {
+                                        this.state.searchList.map((list: any, index) => {
+                                                return (
+                                                    <Cell
+                                                        key={index}
+                                                        multiline={true}
+                                                        description={`${list.country_name}`}
+                                                        onClick={(value) => {
+                                                            this.setState({city: list.name, searchList: []})
+                                                        }}
+                                                    >
+                                                        {`${list.name}`}
+                                                    </Cell>
+                                                );
+                                            }
+                                        )
+                                    }
+                                </List>
+                            </Group>
+                        }
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Тэги'>
+                        <Tags
+                            addedTags={this.state.tags}
+                            onChange={
+                                (tags) =>
+                                    this.setState({tags})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Места'>
+                        {
+                            this.state.places.map(
+                                (place, i) =>
+                                    <Place
+                                        key={i}
+                                        index={i}
+                                        onSave={this.onSavePlace}
+                                        onRemove={this.onRemovePlace}
+                                        {...place}
+                                    />
+                            )
+                        }
+                        <Div className='d-flex flex-row justify-content-end'>
+                            <Icon28AddOutline
+                                onClick={this.onAddNewPlace}
+                            />
+                        </Div>
+                    </FormLayoutGroup>
+                    <Button size='xl' onClick={this.onSave}>
+                        Сохранить
+                    </Button>
+                </FormLayout>
+            </Fragment>
         );
     }
 }

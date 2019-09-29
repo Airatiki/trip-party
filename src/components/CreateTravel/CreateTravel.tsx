@@ -3,11 +3,22 @@ import { dateToHtml } from '../../helpers';
 import { IReduxState } from "api/types";
 import { IProps, IReduxInjectedDispatch, IReduxInjectedState, IState } from './types';
 
-import React, { Component, FormEvent } from 'react';
+import React, { Component, FormEvent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose, Dispatch } from 'redux';
-import { Input, FormLayout, FormLayoutGroup, Radio, Textarea, Checkbox, Button } from '@vkontakte/vkui';
+import {
+    Input,
+    FormLayout,
+    FormLayoutGroup,
+    Radio,
+    Textarea,
+    Checkbox,
+    Button,
+    PanelHeader,
+    Div
+} from '@vkontakte/vkui';
+import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 
 import * as travelsActions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
@@ -35,6 +46,18 @@ class CreateTravel extends Component<IProps, IState> {
         }
     }
 
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+        if (prevProps.travels.length < this.props.travels.length) {
+            console.log(prevProps.travels);
+            console.log(this.props.travels);
+            const travel = this.props.travels.find(
+                (travel) =>
+                    !prevProps.travels.find((prevTravel) => travel.id === prevTravel.id)
+            );
+            this.props.history.push(`/trips/${travel!.id}`);
+        }
+    }
+
     public onChangeType = (event: FormEvent<HTMLInputElement>) => {
         // @ts-ignore
         this.setState({type: event.currentTarget.value});
@@ -56,95 +79,102 @@ class CreateTravel extends Component<IProps, IState> {
 
     public render() {
         return(
-            <FormLayout>
-                <FormLayoutGroup top='Название'>
-                    <Input
-                        defaultValue={this.state.name}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({name: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Дата начала'>
-                    <Input
-                        type='date'
-                        defaultValue={dateToHtml(this.state.startDate)}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({startDate: new Date(event.currentTarget.value)})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Дата конца'>
-                    <Input
-                        type='date'
-                        defaultValue={dateToHtml(this.state.endDate)}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({endDate: new Date(event.currentTarget.value)})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Описание'>
-                    <Textarea
-                        value={this.state.description}
-                        onChange={
-                            (event: FormEvent<HTMLTextAreaElement>) =>
-                                this.setState({description: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Ссылка на чат'>
-                    <Input
-                        className='w-100'
-                        defaultValue={this.state.chatLink}
-                        onChange={
-                            (event: FormEvent<HTMLInputElement>) =>
-                                this.setState({chatLink: event.currentTarget.value})
-                        }
-                    />
-                </FormLayoutGroup>
-                <FormLayoutGroup top='Видимость'>
-                    <Radio
-                        name='visibility'
-                        value={VISIBILITY.FRIENDS}
-                        checked={this.state.visibility === VISIBILITY.FRIENDS}
-                        onChange={this.onChangeVisibility}
-                    >
-                        Только друзьям участников
-                    </Radio>
-                    <Radio
-                        name='visibility'
-                        value={VISIBILITY.FRIENDS_FRIENDS}
-                        checked={this.state.visibility === VISIBILITY.FRIENDS_FRIENDS}
-                        onChange={this.onChangeVisibility}
-                    >
-                        Друзьям и друзьям друзей участников
-                    </Radio>
-                    <Radio
-                        name='visibility'
-                        value={VISIBILITY.ALL}
-                        checked={this.state.visibility === VISIBILITY.ALL}
-                        onChange={this.onChangeVisibility}
-                    >
-                        Всем
-                    </Radio>
-                </FormLayoutGroup>
-                <Checkbox
-                    className='d-none'
-                    defaultChecked={this.state.showTicketCost}
-                    onChange={
-                        () =>
-                            this.setState({showTicketCost: !this.state.showTicketCost})
+            <Fragment>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-2'
+                                onClick={this.props.history.goBack}
+                            />
+                        </Div>
                     }
-                >
-                    Показывать стоимость авиабилетов
-                </Checkbox>
-                <Button size='xl' onClick={this.onSave}>
-                    Сохранить
-                </Button>
-            </FormLayout>
+                    children={
+                        <div>Путешествие</div>
+                    }
+                />
+                <FormLayout>
+                    <FormLayoutGroup top='Название'>
+                        <Input
+                            defaultValue={this.state.name}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({name: event.currentTarget.value})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Дата начала'>
+                        <Input
+                            type='date'
+                            defaultValue={dateToHtml(this.state.startDate)}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({startDate: new Date(event.currentTarget.value)})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Дата конца'>
+                        <Input
+                            type='date'
+                            defaultValue={dateToHtml(this.state.endDate)}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({endDate: new Date(event.currentTarget.value)})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Описание'>
+                        <Textarea
+                            value={this.state.description}
+                            onChange={
+                                (event: FormEvent<HTMLTextAreaElement>) =>
+                                    this.setState({description: event.currentTarget.value})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Ссылка на чат'>
+                        <Input
+                            className='w-100'
+                            defaultValue={this.state.chatLink}
+                            onChange={
+                                (event: FormEvent<HTMLInputElement>) =>
+                                    this.setState({chatLink: event.currentTarget.value})
+                            }
+                        />
+                    </FormLayoutGroup>
+                    <FormLayoutGroup top='Видимость'>
+                        <Radio
+                            name='visibility'
+                            value={VISIBILITY.FRIENDS}
+                            checked={this.state.visibility === VISIBILITY.FRIENDS}
+                            onChange={this.onChangeVisibility}
+                        >
+                            Только друзьям участников
+                        </Radio>
+                        <Radio
+                            name='visibility'
+                            value={VISIBILITY.ALL}
+                            checked={this.state.visibility === VISIBILITY.ALL}
+                            onChange={this.onChangeVisibility}
+                        >
+                            Всем
+                        </Radio>
+                    </FormLayoutGroup>
+                    <Checkbox
+                        className='d-none'
+                        defaultChecked={this.state.showTicketCost}
+                        onChange={
+                            () =>
+                                this.setState({showTicketCost: !this.state.showTicketCost})
+                        }
+                    >
+                        Показывать стоимость авиабилетов
+                    </Checkbox>
+                    <Button size='xl' onClick={this.onSave}>
+                        Сохранить
+                    </Button>
+                </FormLayout>
+            </Fragment>
         );
     }
 }
@@ -154,6 +184,7 @@ export default compose(
         (state: IReduxState) => ({
             profile: profileActions.getState(state),
             guides: guidesActions.getState(state),
+            travels: travelsActions.getState(state),
         }),
         (dispatch: Dispatch) => ({
             post: travelsActions.post(dispatch),

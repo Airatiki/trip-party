@@ -21,6 +21,7 @@ export interface IOwnProps {
     };
     history: {
         push(data: {pathname: string, state: object}): void;
+        goBack(): void;
     }
 }
 

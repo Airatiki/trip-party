@@ -1,17 +1,16 @@
-import { IGuide } from "api/guides/types/instance";
-import { IGetAction } from "api/guides/types/redux";
+import * as NSRedux from 'api/travels/types/redux';
+import {IProfile} from "../../api/profile/types/instance";
+import { IGuide } from "../../api/guides/types/instance";
 
 
-export interface IReduxInjectedState {
+export interface IProps {
     guides: IGuide[];
-    isLoaded: boolean;
+    profile: IProfile;
     error: object | null;
-}
-
-export interface IReduxInjectedDispatch {
-    get(filters: IGetAction['filters']): void;
-}
-
-export interface IProps extends IReduxInjectedState, IReduxInjectedDispatch {
-
+    isLoaded: boolean;
+    history: {
+        push(path: string): void;
+        goBack(): void;
+    };
+    get(filters: NSRedux.IGetAction['filters'], friends: string[], ownerId: string): void;
 }

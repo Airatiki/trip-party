@@ -70,12 +70,7 @@ export async function getAvatars(ids: string[]) {
             },
         });
 
-        console.log(items.response);
-        const photos = (items.response as any).items.slice(0, 3).map((friend: any) => friend.photo_100);
-
-        console.log(photos);
-
-        return photos;
+        return (items.response as any).items.slice(0, 3).map((friend: any) => friend.photo_100);
     } catch (e) {
         console.log(e);
 
@@ -107,7 +102,7 @@ export async function getParticipantsData(ids: string): Promise<IData[] | null> 
             },
         });
 
-        return (items.response as any).items.slice(0, 3).map((friend: any) => ({
+        return (items.response as any).map((friend: any) => ({
                 id: `${friend.id}`,
                 image: friend.photo_100,
                 firstName: friend.first_name,

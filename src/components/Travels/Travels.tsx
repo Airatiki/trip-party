@@ -34,6 +34,8 @@ import Icon24Sort from '@vkontakte/icons/dist/24/sort';
 import {dateToHtml} from "../../helpers";
 import { TAGS } from "../../api/guides/constants";
 import Tags from "../CreateGuide/Tags";
+import Footer from "components/Footer";
+
 
 const MODAL_PAGE_FILTERS = 'filters';
 
@@ -262,7 +264,6 @@ class Travels extends Component<IProps, IFilterState> {
                         </FormLayoutGroup>
                     </FormLayout>
                 </ModalPage>
-
             </ModalRoot>
         );
 
@@ -279,7 +280,7 @@ class Travels extends Component<IProps, IFilterState> {
                                 <Div className='d-flex flex-row'>
                                     <Icon24BrowserBack
                                         className='mr-2'
-                                        onClick={this.props.history.goBack()}
+                                        onClick={this.props.history.goBack}
                                     />
                                     <Icon24Sort
                                         onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}
@@ -310,12 +311,13 @@ class Travels extends Component<IProps, IFilterState> {
                         <div className='background-screen'>
                             {
                                 this.props.travels.map((travel) =>
-                                    <TravelDemo key={travel.id} travel={travel}/>
+                                    <TravelDemo key={travel.id} travel={travel} friends={this.props.profile.friends}/>
                                 )
                             }
                         </div>
                     </Panel>
                 </View>
+                <Footer/>
             </div>
         );
     }

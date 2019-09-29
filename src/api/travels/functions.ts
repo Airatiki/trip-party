@@ -74,3 +74,9 @@ export function removeParticipant(data: ITravel[], participant: IParticipant): I
 
     return [...data];
 }
+
+export function getFriendsCount(travel: ITravel, friendsIds: string[]) {
+    return travel.participants.filter(
+        (participant) => friendsIds.indexOf(participant.id) !== -1
+    ).length;
+}
