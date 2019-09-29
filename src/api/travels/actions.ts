@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { IReduxState } from '../types';
 import { ACTIONS_TYPES } from './constants';
-import { IToPost, IToPut } from './types/instance';
+import { IToPost, IToPut, ITravel } from './types/instance';
 import * as NSRedux from './types/redux';
 
 
@@ -47,4 +47,14 @@ export function put(dispatch: Dispatch) {
         };
         dispatch(action);
     };
+}
+
+export function setUserData(dispatch: Dispatch) {
+    return function(travel: ITravel): void {
+        const action: NSRedux.ISetUserDataAction = {
+            type: ACTIONS_TYPES.SET_USER_DATA_TO_TRAVEL,
+            travel,
+        };
+        dispatch(action);
+    }
 }

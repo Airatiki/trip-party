@@ -101,6 +101,16 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                         {travel.description}
                     </div>
                     <Div>
+                        <div className='row'>
+                            <label className='col-form-label col col-4'>
+                                Даты:
+                            </label>
+                            <div className='col col-8'>
+                                <Button level="secondary" className='w-100'>
+                                    {formatDate(travel.startDate)}&nbsp;-&nbsp;{formatDate(travel.endDate)}
+                                </Button>
+                            </div>
+                        </div>
                         {
                             travel.showTicketCost &&
                             <div className='row'>
@@ -119,16 +129,6 @@ class Display extends Component<IProps, {ticket: {cost: string, link: string}}> 
                                 </div>
                             </div>
                         }
-                        <div className='row'>
-                            <label className='col-form-label col col-4'>
-                                Даты:
-                            </label>
-                            <div className='col col-8'>
-                                <Button className='w-100'>
-                                    {formatDate(travel.startDate)}&nbsp;-&nbsp;{formatDate(travel.endDate)}
-                                </Button>
-                            </div>
-                        </div>
                         {
                             travel.chatLink &&
                             <div className='row'>

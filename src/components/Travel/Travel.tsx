@@ -6,7 +6,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import { withRouter } from 'react-router';
-import { Div, ScreenSpinner } from '@vkontakte/vkui';
+import { Div, PanelHeader, ScreenSpinner } from '@vkontakte/vkui';
+import Icon24BrowserBack from '@vkontakte/icons/dist/24/browser_back';
 
 import * as actions from 'api/travels/actions';
 import * as profileActions from 'api/profile/actions';
@@ -16,11 +17,14 @@ import Form from './Form';
 
 
 class Travel extends Component<IProps, IState> {
+    public participantsDataFetched: boolean;
+
     constructor(props: IProps) {
         super(props);
         this.state = {
             isForm: false,
         };
+        this.participantsDataFetched = false;
     }
 
     public componentDidMount(): void {
@@ -30,6 +34,18 @@ class Travel extends Component<IProps, IState> {
                 this.props.profile.friends,
                 this.props.profile.VkId,
             );
+        } else {
+            this.props.setUsersData(this.props.travel);
+            this.participantsDataFetched = true;
+        }
+    }
+
+    public componentDidUpdate(): void {
+        if (this.props.travel) {
+            if (!this.participantsDataFetched) {
+                this.props.setUsersData(this.props.travel);
+                this.participantsDataFetched = true;
+            }
         }
     }
 
@@ -45,6 +61,19 @@ class Travel extends Component<IProps, IState> {
 
         return(
             <Div>
+                <PanelHeader
+                    left={
+                        <Div className='d-flex flex-row'>
+                            <Icon24BrowserBack
+                                className='mr-2'
+                                onClick={this.props.history.goBack}
+                            />
+                        </Div>
+                    }
+                    children={
+                        <div>Путешествие</div>
+                    }
+                />
                 {
                     this.state.isForm ?
                         (
@@ -75,6 +104,7 @@ export default compose(
         (dispatch: Dispatch) => ({
             get: actions.get(dispatch),
             put: actions.put(dispatch),
+            setUsersData: actions.setUserData(dispatch),
         }),
     ),
 )(withRouter(Travel));
