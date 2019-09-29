@@ -10,7 +10,7 @@ export function setLike(guides: IGuide[], data: IToPostLike) {
         guides[ind] = {
             ...guide,
             likes: data.isLiked ? guide.likes - 1 : guide.likes + 1,
-                hasBeenLiked: data.isLiked,
+            hasBeenLiked: !data.isLiked,
         };
     }
     return [...guides];
